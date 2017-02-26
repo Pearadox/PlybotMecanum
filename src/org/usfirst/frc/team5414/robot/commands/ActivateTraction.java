@@ -8,22 +8,22 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ActivateButt extends Command {
+public class ActivateTraction extends Command {
 
-    public ActivateButt() {
+    public ActivateTraction() {
       
     	requires(Robot.drivetrain);
     }
 
    
     protected void initialize() {
-    	Robot.drivetrain.FullButterfly();  	//sets the solonoids to all mecanums engaged with the ground
+    	Robot.drivetrain.FullTraction();  	//sets the solonoids to all mecanums engaged with the ground
     }
 
   
     protected void execute() {
 
-    	Robot.drivetrain.mecanumDrive(Robot.oi.getJoystick1());		//sets the drivetrain to be mecanum drive
+    	Robot.drivetrain.arcadeDrive(Robot.oi.getJoystick1());		//sets the drivetrain to be mecanum drive
     }
 
     
@@ -36,8 +36,8 @@ public class ActivateButt extends Command {
 
 
     protected void end() {
-    	Robot.drivetrain.FullTraction();							//sets the bot back to full traction wheels 
-    	Robot.drivetrain.arcadeDrive(Robot.oi.getJoystick1());		//sets the drive back to arcade
+    	Robot.drivetrain.FullButterfly();							//sets the bot back to full traction wheels 
+    	Robot.drivetrain.mecanumDrive(Robot.oi.getJoystick1());		//sets the drive back to arcade
     }
 
    

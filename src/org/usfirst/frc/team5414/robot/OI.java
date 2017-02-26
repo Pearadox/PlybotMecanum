@@ -3,7 +3,7 @@ package org.usfirst.frc.team5414.robot;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
 
-import org.usfirst.frc.team5414.robot.commands.ActivateButt;
+import org.usfirst.frc.team5414.robot.commands.ActivateTraction;
 import org.usfirst.frc.team5414.robot.commands.Activatehalf;
 //import org.usfirst.frc.team5414.robot.commands.ActivateButt;
 //import org.usfirst.frc.team5414.robot.commands.ActivateTract;
@@ -15,8 +15,12 @@ import org.usfirst.frc.team5414.robot.commands.GearCollectCommand;
 import org.usfirst.frc.team5414.robot.commands.GoToPeg;
 import org.usfirst.frc.team5414.robot.commands.LiftingGroup;
 import org.usfirst.frc.team5414.robot.commands.LowerGear;
+import org.usfirst.frc.team5414.robot.commands.ServoCommand;
+import org.usfirst.frc.team5414.robot.commands.ServoIncremental;
 import org.usfirst.frc.team5414.robot.commands.SpitGear;
 import org.usfirst.frc.team5414.robot.commands.ToggleLight;
+
+import org.usfirst.frc.team5414.robot.commands.servoRotate;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -45,18 +49,23 @@ public class OI {
 		JoystickButton CollectGear = new JoystickButton(stick, RobotMap.BtnCollectGear);
 		JoystickButton CollectGearSpitOut = new JoystickButton(stick, RobotMap.BtnCollectGearSpit);
 		JoystickButton LowerArm = new JoystickButton(stick, RobotMap.BtnLower);
+		JoystickButton servoTurn = new JoystickButton(stick, RobotMap.servo60);
+		JoystickButton servoSLowly = new JoystickButton(stick, RobotMap.servoSlow);
 		
 		//Butterfly Drive commands for solonoids
-		ActivateButterfly.whenPressed(new ActivateButt());
-		ActivateHalf.whenPressed(new Activatehalf());
-		ActivateButterfly.whenReleased(new ActivateButt());
-		ActivateHalf.whenReleased(new ActivateButt());
+		ActivateButterfly.whenPressed(new ActivateTraction());
+//		ActivateHalf.whenPressed(new Activatehalf());
+
+
 		
 		//Vision commands for light & Finding peg
 		RobotAlign.whenPressed(new GoToPeg());
 		ToggleLight.whenPressed(new ToggleLight());
 		
 		//Code for Starting and stopping the climbing
+		servoTurn.whenPressed(new servoRotate());
+		servoSLowly.whenPressed(new ServoCommand());
+		
 		Climbing.whenPressed(new LiftingGroup());			//I edited Allen's command group, didnt really need cmdgroup for this. Could be achieved in one command
 		PlsStopClimbing.whenPressed(new ClimberStop());		//Sets the climbing motor to 0
 		
@@ -64,6 +73,8 @@ public class OI {
 		CollectGear.whenPressed(new GearCollectCommand()); 		//strats intake, stops when button released, then raises arm into limit switch
 		CollectGearSpitOut.whenPressed(new SpitGear());			//spits out gear
 		LowerArm.whenPressed(new LowerGear());
+		
+		
 	}
 	public Joystick getJoystick1()
 	{

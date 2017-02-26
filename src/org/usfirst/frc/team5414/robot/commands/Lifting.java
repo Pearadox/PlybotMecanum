@@ -13,17 +13,17 @@ public class Lifting extends Command {
     public Lifting() {
        requires(Robot.climber);
        requires(Robot.electrical);
-       requires(Robot.servo1);
+//       requires(Robot.servo1);
     }
 
     
     protected void initialize() {
-    	Robot.servo1.Zero();		//resets the servos if they were out of position
+//    	Robot.servo1.Zero();		//resets the servos if they were out of position
     }
 
    
     protected void execute() {
-    	Robot.servo1.setAngle(RobotMap.ServoDegrees);		//moves the servos to grab the rope
+//    	Robot.servo1.setAngle(RobotMap.ServoDegrees);		//moves the servos to grab the rope
     	Robot.climber.lift();								//sets the climber to a set speed to initialize climbing
     }
 
@@ -32,9 +32,9 @@ public class Lifting extends Command {
     	if (Robot.electrical.getClimberCurrent() > RobotMap.climberCurrentSpike) {		//when it hits the top, stop climbing
     		return true;
     	}
-    	else {
+    	
     		return false;
-    	}
+    	
     }
 
     protected void end() {

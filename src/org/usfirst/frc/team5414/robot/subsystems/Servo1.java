@@ -14,16 +14,26 @@ public class Servo1 extends Subsystem {
         servo2 = new Servo(RobotMap.ServoPort2);//DON'T FORGET TO CHANGE PORT #!
     }
 	
-	public void setAngle(double degrees)
+	public void setAngle(double degree,double degrees)
 	{
-		servo.setAngle(RobotMap.ServoDegrees);		//may have to inverse depending on which servo is which
-		servo2.setAngle(-RobotMap.ServoDegrees);
+		servo.setAngle(degree);		//may have to inverse depending on which servo is which
+		servo2.setAngle(degrees);
 	}
-	
+	public void setAngleLeft(double angle){
+		servo.setAngle(angle);
+	}
+	public void setAngleRight(double angle){
+		servo2.setAngle(angle);
+	}
+	public void setSpeed(){
+		servo.setSpeed(.5);
+		servo2.setSpeed(-.5);
+	}
 	public void Zero()
 	{
 		servo.setAngle(0);							//sets the angle of both of the gyros equal to 0. Essentially just resets the gyro
-		servo2.setAngle(0);
+		servo2.setAngle(90);
+		
 	}
 	
 }

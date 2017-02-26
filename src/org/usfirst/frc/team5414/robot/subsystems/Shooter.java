@@ -2,6 +2,8 @@ package org.usfirst.frc.team5414.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import org.usfirst.frc.team5414.robot.RobotMap;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
@@ -21,11 +23,11 @@ public class Shooter extends Subsystem {
     	talon.configNominalOutputVoltage(+0.0f, -0.0f);
     	talon.configPeakOutputVoltage(+12.0f, 0.0f);
     	talon.setProfile(0);
-    	talon.setF(1.58);
-    	talon.setP(7.7);
-    	talon.setI(0);
-    	talon.setD(850);
-    	talon.setControlMode(talon.getClosedLoopError());
+    	talon.setF(RobotMap.ShooterF);
+    	talon.setP(RobotMap.ShooterkP);
+    	talon.setI(RobotMap.ShooterkI);
+    	talon.setD(RobotMap.ShooterkD);
+    	talon.changeControlMode(TalonControlMode.Speed);
     	
     }
     

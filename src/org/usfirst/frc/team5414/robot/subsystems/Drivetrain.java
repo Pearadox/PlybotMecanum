@@ -6,7 +6,9 @@ import org.usfirst.frc.team5414.robot.commands.DrivewithJoystick;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -21,12 +23,26 @@ public class Drivetrain extends Subsystem {
 	private SpeedController rightf_motor, rightb_motor, leftf_motor, leftb_motor;
 //	private CANTalon leftf_motor, leftb_motor;
     private RobotDrive drive;
+    private Encoder encoderFR; 
+    private Encoder encoderBR; 
+    private Encoder encoderBL; 
+    private Encoder encoderFL; 
+    PIDController motorController;
 
 	Solenoid sol;
 	public static DoubleSolenoid FL,FR,BL,BR; 
     
     public Drivetrain()
     {
+    	encoderFR = new Encoder(RobotMap.DIOencoderFRa, RobotMap.DIOencoderFRb, false, Encoder.EncodingType.k4X);
+    	encoderBR = new Encoder(RobotMap.DIOencoderBRa, RobotMap.DIOencoderBRb, false, Encoder.EncodingType.k4X);
+    	encoderBL = new Encoder(RobotMap.DIOencoderBLa, RobotMap.DIOencoderBLb, false, Encoder.EncodingType.k4X);
+    	encoderFL = new Encoder(RobotMap.DIOencoderFLa, RobotMap.DIOencoderFLb, false, Encoder.EncodingType.k4X);
+    	
+    	encoderFR.reset();
+    	encoderBR.reset();
+    	encoderBL.reset();
+    	encoderFL.reset();
     	
     	FL = new DoubleSolenoid(3,4);
     	FR = new DoubleSolenoid(2,5);
@@ -44,8 +60,8 @@ public class Drivetrain extends Subsystem {
 		rightf_motor = new Victor(RobotMap.PWMRightFrontMotor);
 		leftf_motor.setInverted(Boolean.FALSE);
 		leftb_motor.setInverted(Boolean.FALSE);
-		rightf_motor.setInverted(Boolean.FALSE);
-		rightb_motor.setInverted(Boolean.FALSE);
+		rightf_motor.setInverted(Boolean.TRUE);
+		rightb_motor.setInverted(Boolean.TRUE);
 		drive = new RobotDrive(leftf_motor, leftb_motor, rightf_motor, rightb_motor);
     	
     }
@@ -63,21 +79,21 @@ public class Drivetrain extends Subsystem {
     	double ax1; 	//X-axis of motion for robot
     	double ax2;		//Y-axis of motion for robot
     	
-    	if(Math.abs(stick.getRawAxis(1)) < .087)	//Setting deadzone for the x-axis
+    	if(Math.abs(stick.getRawAxis(2)) < .087)	//Setting deadzone for the x-axis
     	{
     		ax1 = 0;
     	}
     	else
     	{
-    		ax1 = stick.getRawAxis(1);
+    		ax1 = stick.getRawAxis(2);
     	}
-    	if(Math.abs(stick.getRawAxis(2)) < .18)		//Setting deazone for the y-axis
+    	if(Math.abs(stick.getRawAxis(1)) < .18)		//Setting deazone for the y-axis
     	{
     		ax2 = 0;
     	}
     	else
     	{
-    		ax2 = stick.getRawAxis(2);
+    		ax2 = stick.getRawAxis(1);
     	}
     	
     	boolean ax1n = false, ax2n = false;
@@ -86,7 +102,11 @@ public class Drivetrain extends Subsystem {
     	ax1 *= ax1; ax2 *= ax2; //scaling the output of the joystick to fine tune the end result
     	if(ax1n) ax1 *= -1;
     	if(ax2n) ax2 *= -1;
-    	drive.arcadeDrive(ax1,ax2);
+    	SmartDashboard.putNumber("EncoderBR", encoderBR.get());
+    	SmartDashboard.putNumber("EncoderFR", encoderFR.get());
+    	SmartDashboard.putNumber("EncoderFL", encoderFL.get());
+    	SmartDashboard.putNumber("EncoderBL", encoderBL.get());
+    	drive.arcadeDrive(-ax1,-ax2);
     }
     
     public void toggleLight()
@@ -103,7 +123,7 @@ public class Drivetrain extends Subsystem {
     {
     	sol.set(false);
     }
-    public void FullButterfly(){
+    public void FullTraction(){
 
     	FL.set(DoubleSolenoid.Value.kReverse);		//this sets all of the solonoids to reverse so that tractions are engaged
     	FR.set(DoubleSolenoid.Value.kReverse);
@@ -111,7 +131,7 @@ public class Drivetrain extends Subsystem {
     	BR.set(DoubleSolenoid.Value.kReverse);
     	
     } 
-    public void FullTraction(){
+    public void FullButterfly(){
 
     	FL.set(DoubleSolenoid.Value.kForward);		//this sets all of the solonoids to full thrust, engaging the mecanum 
     	FR.set(DoubleSolenoid.Value.kForward);
@@ -125,7 +145,6 @@ public class Drivetrain extends Subsystem {
     	BR.set(DoubleSolenoid.Value.kReverse);
     } 
     public void drive(double left, double right) {
-    	
     	double drivestraightconstant = 1; 
     	drive.tankDrive(left * drivestraightconstant, right);
     	
@@ -143,9 +162,9 @@ public class Drivetrain extends Subsystem {
     
 public void mecanumDrive(Joystick stick) {
 	SmartDashboard.putString("Drivemode", "Mechanum");  //publishing the drive mode to smartdashboard
-		double moveX = stick.getRawAxis(1);				//setting joystick values to the axis'
-    	double moveY = stick.getRawAxis(0);
-    	double Rotate = stick.getRawAxis(2);
+		double moveX = stick.getRawAxis(0);				//setting joystick values to the axis'
+    	double moveY = -stick.getRawAxis(1);
+    	double Rotate = -stick.getRawAxis(2);
     	
     	int StrafeRight = 90;							//Sets POV values to variables 
     	int StrafeLeft = 270;
@@ -153,13 +172,13 @@ public void mecanumDrive(Joystick stick) {
     	int MoveBackward = 180;
     	
     	double FBFactor = 1;							//setting scaling factors for the POV, to change the speeds of each direction
-    	double strafeFactor = 2;
+    	double strafeFactor = 1;
     	double rotateFactor = 1.25;
     	
     	double countIterations = 0;						
     	double desiredHeading = 0;
     	
-    	double moveSpeedPOV = .7;						//Speed of the POV directions 
+    	double moveSpeedPOV = .6;						//Speed of the POV directions 
     	
     	
     	
@@ -221,45 +240,13 @@ public void mecanumDrive(Joystick stick) {
 				} else if (countIterations > 5) {
 					Rotate = (desiredHeading - Robot.navx.getYaw()) / 40.0;
 				}
+				SmartDashboard.putNumber("EncoderBR", encoderBR.get());
+		    	SmartDashboard.putNumber("EncoderFR", encoderFR.get());
+		    	SmartDashboard.putNumber("EncoderFL", encoderFL.get());
+		    	SmartDashboard.putNumber("EncoderBL", encoderBL.get());
+				drive.mecanumDrive_Cartesian(moveX, moveY, Rotate,0);
 				
-				drive.mecanumDrive_Cartesian(moveY, Rotate, moveX,0);
-				
-		
-//    	if(Math.abs(stick.getRawAxis(0)) < .168)
-//    	{	
-//    		ax0 = 0;
-//    	}
-//    	else
-//    	{
-//    		ax0 = stick.getRawAxis(0);
-//    	}
-//    	
-//    	if(Math.abs(stick.getRawAxis(1)) < .087)
-//    	{
-//    		ax1 = 0;
-//    	}
-//    	else
-//    	{
-//    		ax1 = stick.getRawAxis(1);
-//    	}
-//    	
-//    	if(Math.abs(stick.getRawAxis(2)) < .18)
-//    	{
-//    		ax2 = 0;
-//    	}
-//    	else
-//    	{
-//    		ax2 = stick.getRawAxis(2);
-//    	}
-//    	boolean ax0n = false, ax1n = false, ax2n = false;
-//    	if(ax0<0) ax0n = true;
-//    	if(ax1<0) ax1n = true;
-//    	if(ax2<0) ax2n = true;
-//    	ax0 *= ax0; ax1 *= ax1; ax2 *= ax2; 
-//    	if(ax0n) ax0 *= -1;
-//    	if(ax1n) ax1 *= -1;
-//    	if(ax2n) ax2 *= -1;
-//		drive.mecanumDrive_Cartesian(ax0, ax1, ax2, 0);
+
 		
 	}	
     	

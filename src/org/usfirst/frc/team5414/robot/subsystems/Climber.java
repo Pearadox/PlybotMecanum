@@ -41,9 +41,9 @@ public class Climber extends Subsystem {
     public void stop() {
     	lifter.set(0.0);							//sets the lifter speed to 0
     }
-   // public void lower() {
-   // 	lifter.set(RobotMap.lifterLowerSpeed);
-  ///  }
+    public void lower() {
+//        lifter.set(RobotMap.lifterLowerSpeed);
+    }
 }
 
 

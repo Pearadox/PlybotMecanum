@@ -19,15 +19,24 @@ public class RobotMap {
 	public static int BtnVision = 4;			//starts vision code
 	public static int BtnClimber = 5;			//climberbutton raise
 	public static int BtnStop = 6;				//climber button stop, set motor 0
+	public static int servo60 = 7;
+	public static int encoderOn = 8;
 	public static int BtnLower = 9;
+	public static int servoSlow = 10;
 	public static int BtnCollectGear = 11; 		//Will intake AND raise the assembly with limit switch
 	public static int BtnCollectGearSpit = 12; 	//will lower the arm assembly at set speed no limitswitch
 	
+	public static double wheelDiameter = 6;
+	public static int EncoderTicks = 1440;
+	public static double lengthOfRotation = (wheelDiameter / 2) * (2 * Math.PI);
+	public static double lengthOfTick = lengthOfRotation / EncoderTicks;
+	
 	//shooter PID loop
-	public static double ShooterkP = 0;
+	public static double ShooterkP = 7.7;
 	public static double ShooterkI = 0;
-	public static double ShooterkD = 0;
-	public static double shootSpeed = 0.5;
+	public static double ShooterkD = 850;
+	public static double ShooterF = 1.58;
+	public static double ShooterRPM = 3000;
 	
 	//Closed-position loop for arm
 	public static int ArmError = 205;
@@ -52,6 +61,7 @@ public class RobotMap {
 	public static int PWMGearArm = 0;
 	
 	//arm & collector speeds
+	public static double armTargetRotations = .3;
 	public static double armRaiseSpeed = 0.3;
 	public static double armLowerSpeed = -0.2;
 	public static double intakeSpeed = -1;
@@ -70,10 +80,23 @@ public class RobotMap {
 	//Servo Ports
 	public static int ServoPort = 8;  		//Set to correct Port for servos for climber
 	public static int ServoPort2 = 9; 		//Set to correct Port for servos for climber
-	public static int ServoDegrees = 60;	//set range of motion of the servos
+	public static int Servo1Angle = 90;	//set range of motion of the servos
+	public static int Servo2Angle = 0;
+	public static int Servo1Zero = 0;
+	public static int Servo2Zero = 90;
 	
 	//Limit switch port
-	public static int LimitInput = 7;  //Set limit to the digitalInput
+	public static int LimitInput = 10;  //Set limit to the digitalInput
+	
+	//encoder DIO ports
+	public static int DIOencoderFRa = 8;
+	public static int DIOencoderFRb = 9;
+	public static int DIOencoderFLa = 4;
+	public static int DIOencoderFLb = 5;
+	public static int DIOencoderBRa = 6;
+	public static int DIOencoderBRb = 7;
+	public static int DIOencoderBLa = 2;
+	public static int DIOencoderBLb = 3;
 	
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:

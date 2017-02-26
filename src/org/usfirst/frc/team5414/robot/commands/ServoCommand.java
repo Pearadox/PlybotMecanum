@@ -5,12 +5,15 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class LiftingGroup extends CommandGroup {
+public class ServoCommand extends CommandGroup {
 
-    public LiftingGroup() {
+    public ServoCommand() {
+    	addSequential(new ServoLeft());
+    	addParallel(new ServoRight());
+//    	addSequential(new Lifting());
         // Add Commands here:
-        addSequential(new Lifting());
-//      addSequential(new Holding());
+        // e.g. addSequential(new Command1());
+        //      addSequential(new Command2());
         // these will run in order.
 
         // To run multiple commands at the same time,

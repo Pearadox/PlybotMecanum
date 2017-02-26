@@ -60,11 +60,10 @@ public class GearArm extends Subsystem {
 		printer.append(motorOutput);
         printer.append("\tpos:");
         printer.append(GearArm.getPosition() );
-    	
-    		/* Position mode - button just pressed */
-        	targetPositionRotations = RobotMap.armRaiseSpeed * 1; /* 50 Rotations in either direction */
+    	targetPositionRotations = RobotMap.armTargetRotations;
+    		/* Position mode - button just pressed */ 
         	GearArm.changeControlMode(TalonControlMode.Position);
-        	GearArm.set(targetPositionRotations); /* 50 rotations in either direction */
+        	GearArm.set(targetPositionRotations); 
     	
     	if( GearArm.getControlMode() == TalonControlMode.Position) {
         	/* append more signals to print when in speed mode. */
@@ -79,6 +78,7 @@ public class GearArm extends Subsystem {
         }
     	printer.setLength(0);
     }
+    
     public void setTalonMode(){
     	GearArm.changeControlMode(TalonControlMode.PercentVbus);
     }
@@ -95,9 +95,9 @@ public class GearArm extends Subsystem {
         printer.append(GearArm.getPosition() );
     	
     		/* Position mode - button just pressed */
-        	targetPositionRotations = RobotMap.armLowerSpeed * .8; /* 50 Rotations in either direction */
+        	targetPositionRotations = RobotMap.armTargetRotations * .8; 
         	GearArm.changeControlMode(TalonControlMode.Position);
-        	GearArm.set(targetPositionRotations); /* 50 rotations in either direction */
+        	GearArm.set(targetPositionRotations); 
     	
     	if( GearArm.getControlMode() == TalonControlMode.Position) {
         	/* append more signals to print when in speed mode. */
