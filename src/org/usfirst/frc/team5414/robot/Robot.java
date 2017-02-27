@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Compressor;
@@ -21,6 +22,8 @@ import edu.wpi.cscore.UsbCamera;
 import org.usfirst.frc.team5414.robot.commands.AutonomousLeftSide;
 import org.usfirst.frc.team5414.robot.commands.AutonomousMiddle;
 import org.usfirst.frc.team5414.robot.commands.AutonomousRightSide;
+import org.usfirst.frc.team5414.robot.commands.SetCompPractWheel;
+import org.usfirst.frc.team5414.robot.commands.SetPlybotWheel;
 import org.usfirst.frc.team5414.robot.subsystems.Climber;
 import org.usfirst.frc.team5414.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team5414.robot.subsystems.Electrical;
@@ -48,7 +51,7 @@ public class Robot extends IterativeRobot {
 //	public static DigitalInput 
 //	public static ShooterPID shootPID;
 	Command autonomousCommand;
-//	SendableChooser<Command> chooser = new SendableChooser<>();
+	SendableChooser<Command> chooser = new SendableChooser<>();
 	boolean currentButtonState=false;
     String test="";
     UsbCamera cam1;
@@ -79,10 +82,11 @@ public class Robot extends IterativeRobot {
 		navx = new NavX();
 //		shoot=new Wheel();
 		oi = new OI();
-//		for (double area:areas) 
-//        {
-//        	SmartDashboard.putNumber("Area", area);
-//        }
+		
+		chooser.addDefault("Plybot (8 in)", new SetPlybotWheel());
+		chooser.addObject("Competition/Practice (6 in)", new SetCompPractWheel());
+		SmartDashboard.putData("Wheel Size", chooser);
+		
 //		chooser.addDefault("Default Auto", new ExampleCommand());
 //		 chooser.addObject("My Auto", new MyAutoCommand());
 //		SmartDashboard.putData("Auto mode", chooser);

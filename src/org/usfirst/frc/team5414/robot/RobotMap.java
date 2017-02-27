@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5414.robot;
 
+import java.util.*;
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -98,8 +99,7 @@ public class RobotMap {
 	public static int DIOencoderBLa = 2;
 	public static int DIOencoderBLb = 3;
 	
-	// If you are using multiple modules, make sure to define both the port
-	// number and the module. For example you with a rangefinder:
-	// public static int rangefinderPort = 1;
-	// public static int rangefinderModule = 1;
+	//Shooter Lookup Table
+	public static ArrayList<Double> distance = new ArrayList<Double>();
+	public static ArrayList<Integer> rpm = new ArrayList<Integer>();
 }
