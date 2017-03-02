@@ -34,6 +34,8 @@ import org.usfirst.frc.team5414.robot.subsystems.Servo1;
 //import org.usfirst.frc.team5414.robot.subsystems.ShooterPID;
 import org.usfirst.frc.team5414.robot.subsystems.WheelEncoder;
 
+//import com.autodesk.bxd.EmulatorControl;
+
 public class Robot extends IterativeRobot {
 	
 	public static Drivetrain drivetrain;
@@ -226,4 +228,9 @@ public class Robot extends IterativeRobot {
 		}
 		return x;
 	}
+	
+//	public static void main(String[] args)
+//	{
+//		EmulatorControl.start(9999, Robot.class);
+//	}
 }

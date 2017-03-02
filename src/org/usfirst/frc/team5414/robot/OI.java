@@ -10,6 +10,7 @@ import org.usfirst.frc.team5414.robot.commands.Activatehalf;
 //import org.usfirst.frc.team5414.robot.commands.Activatehalf;
 import org.usfirst.frc.team5414.robot.commands.ClimberStop;
 import org.usfirst.frc.team5414.robot.commands.CollectGear;
+import org.usfirst.frc.team5414.robot.commands.DriveEncDist;
 import org.usfirst.frc.team5414.robot.commands.GearCollectCommand;
 //import org.usfirst.frc.team5414.robot.commands.Align;
 import org.usfirst.frc.team5414.robot.commands.GoToPeg;
@@ -51,6 +52,9 @@ public class OI {
 		JoystickButton LowerArm = new JoystickButton(stick, RobotMap.BtnLower);
 		JoystickButton servoTurn = new JoystickButton(stick, RobotMap.servo60);
 		JoystickButton servoSLowly = new JoystickButton(stick, RobotMap.servoSlow);
+		JoystickButton DriveOneRotation = new JoystickButton(stick, 12);
+		
+		DriveOneRotation.whenPressed(new DriveEncDist(1));
 		
 		//Butterfly Drive commands for solonoids
 		ActivateButterfly.whenPressed(new ActivateTraction());

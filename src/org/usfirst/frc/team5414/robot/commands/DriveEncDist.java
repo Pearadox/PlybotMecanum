@@ -1,6 +1,8 @@
 package org.usfirst.frc.team5414.robot.commands;
 
 import org.usfirst.frc.team5414.robot.Robot;
+import org.usfirst.frc.team5414.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Preferences;
@@ -23,7 +25,7 @@ public class DriveEncDist extends Command implements PIDOutput{
 	double PIDOut;
 	
     public DriveEncDist(double d) {
-    	distance = d*1300;
+    	distance = d* RobotMap.EncoderTicks;
     	requires(Robot.drivetrain);
     	requires(Robot.encoder);
     	requires(Robot.navx);
@@ -58,6 +60,7 @@ public class DriveEncDist extends Command implements PIDOutput{
 //    	{
 //    		Robot.drivetrain.arcadeDrive(-.5, -1*changeInAngle*kP);
 //    	}
+    	Robot.drivetrain.drive(-.4,-.4);
     	kP = prefs.getDouble("Drive kP", kP);
     	kI = prefs.getDouble("Drive kI", kI);
     	kD = prefs.getDouble("Drive kD", kD);
@@ -67,15 +70,17 @@ public class DriveEncDist extends Command implements PIDOutput{
     	SmartDashboard.putNumber("(prefs) Drive kD", kD);
     	SmartDashboard.putNumber("(prefs)", speed);
     	SmartDashboard.putNumber("Difference In Angle", Robot.navx.getYaw() - originalAngle);
+    	System.out.println("DRIVE");
     	twistpid.setPID(kP, kI, kD);
     	twistpid.setSetpoint(originalAngle);
     	twistpid.enable();
-
+    	SmartDashboard.putNumber("encdist", Robot.encoder.getDistance());
+    	SmartDashboard.putNumber("targetdist", distance);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(Robot.encoder.getDistance() >= distance){
+    	if(Math.abs(Robot.encoder.getDistance()) >= distance){
     		return true;
     	}
     	return false;

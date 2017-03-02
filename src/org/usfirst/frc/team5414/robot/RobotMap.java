@@ -28,7 +28,7 @@ public class RobotMap {
 	public static int BtnCollectGearSpit = 12; 	//will lower the arm assembly at set speed no limitswitch
 	
 	public static double wheelDiameter = 6;
-	public static int EncoderTicks = 1440;
+	public static int EncoderTicks = 1440 / 4 * 26 / 12 * 116/100;	
 	public static double lengthOfRotation = (wheelDiameter / 2) * (2 * Math.PI);
 	public static double lengthOfTick = lengthOfRotation / EncoderTicks;
 	
