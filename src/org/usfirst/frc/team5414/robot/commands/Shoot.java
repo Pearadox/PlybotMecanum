@@ -1,45 +1,31 @@
 package org.usfirst.frc.team5414.robot.commands;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import org.usfirst.frc.team5414.robot.Robot;
 
-import org.usfirst.frc.team5414.robot.RobotMap;
-
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class GetShooterValues extends Command {
+public class Shoot extends Command {
 
-    public GetShooterValues() {
+    public Shoot() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	try {
-			Scanner input = new Scanner(new File("ShooterLookupTable.dat"));
-			input.nextLine();
-			while(input.hasNextLine())
-			{
-				RobotMap.distance.add(input.nextDouble());
-				RobotMap.rpm.add(input.nextInt());
-			}
-		} catch (FileNotFoundException e) {DriverStation.reportWarning("SHOOTER FILE ERROR", true);}
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.shooter.shoot();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true

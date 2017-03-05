@@ -2,6 +2,7 @@
 package org.usfirst.frc.team5414.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -22,6 +23,7 @@ import edu.wpi.cscore.UsbCamera;
 import org.usfirst.frc.team5414.robot.commands.AutonomousLeftSide;
 import org.usfirst.frc.team5414.robot.commands.AutonomousMiddle;
 import org.usfirst.frc.team5414.robot.commands.AutonomousRightSide;
+import org.usfirst.frc.team5414.robot.commands.RaiseArm;
 import org.usfirst.frc.team5414.robot.commands.SetCompPractWheel;
 import org.usfirst.frc.team5414.robot.commands.SetPlybotWheel;
 import org.usfirst.frc.team5414.robot.subsystems.Climber;
@@ -31,7 +33,7 @@ import org.usfirst.frc.team5414.robot.subsystems.GearArm;
 import org.usfirst.frc.team5414.robot.subsystems.GearCollector;
 import org.usfirst.frc.team5414.robot.subsystems.NavX;
 import org.usfirst.frc.team5414.robot.subsystems.Servo1;
-//import org.usfirst.frc.team5414.robot.subsystems.ShooterPID;
+import org.usfirst.frc.team5414.robot.subsystems.Shooter;
 import org.usfirst.frc.team5414.robot.subsystems.WheelEncoder;
 
 //import com.autodesk.bxd.EmulatorControl;
@@ -50,8 +52,9 @@ public class Robot extends IterativeRobot {
 	public static GearCollector gearcollector;
 	public static REVDigitBoard revdigitboard;
 	public static Servo1 servo1;
+	Preferences prefs;
 //	public static DigitalInput 
-//	public static ShooterPID shootPID;
+	public static Shooter shooter;
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	boolean currentButtonState=false;
@@ -67,14 +70,14 @@ public class Robot extends IterativeRobot {
 			servo1 = new Servo1();
 //			cam1 = new UsbCamera("cam1", 1); 
 			CameraServer.getInstance().startAutomaticCapture(0);
-			CameraServer.getInstance().startAutomaticCapture(1);
+//			CameraServer.getInstance().startAutomaticCapture(1);
 		} catch(Exception e){}
 		revdigitboard = new REVDigitBoard();
 		table = NetworkTable.getTable("GRIP/myContoursReport");
 		geararm = new GearArm();
 		gearcollector = new GearCollector();
 		compressor = new Compressor(0);
-//		shootPID = new ShooterPID();
+		shooter = new Shooter();
 		compressor.start();
 		drivetrain = new Drivetrain();
 		encoder = new WheelEncoder();
@@ -84,11 +87,14 @@ public class Robot extends IterativeRobot {
 		navx = new NavX();
 //		shoot=new Wheel();
 		oi = new OI();
-		
 		chooser.addDefault("Plybot (8 in)", new SetPlybotWheel());
 		chooser.addObject("Competition/Practice (6 in)", new SetCompPractWheel());
 		SmartDashboard.putData("Wheel Size", chooser);
-		
+		prefs = Preferences.getInstance();
+		prefs.putString("Areas", "172,272,372,472");
+		prefs.putString("RPMs", "4000,3500,3000,2500");
+		getAreas();
+		getRPMs();
 //		chooser.addDefault("Default Auto", new ExampleCommand());
 //		 chooser.addObject("My Auto", new MyAutoCommand());
 //		SmartDashboard.putData("Auto mode", chooser);
@@ -191,8 +197,9 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("max Y", maxY);
 //		SmartDashboard.putNumber("max Twist", maxT);
 //		SmartDashboard.putNumber("servangle", ServoTest.serv.getAngle());
-		
+		System.out.println(geararm.currentposition());
 		double[] areas = table.getNumberArray("area", new double[0]);
+		SmartDashboard.putString("Area", Arrays.toString(areas));
 		Scheduler.getInstance().run();
 		currentButtonState = oi.getJoystick1().getRawButton(5);
     	
@@ -204,6 +211,7 @@ public class Robot extends IterativeRobot {
 			} catch (Exception e) {
 				SmartDashboard.putBoolean("Errored", true);
 			}
+    		
 
 	}
 
@@ -215,7 +223,8 @@ public class Robot extends IterativeRobot {
 		LiveWindow.run();
 	}
 	public static boolean containsArea(){
-		double[] thing  = table.getNumberArray("area", new double[0]);
+		double[] thing  = table.getNumberArray(""
+				+ "", new double[0]);
 //		SmartDashboard.putString("areaThing", Arrays.toString(thing));
 //		SmartDashboard.putNumber("Thing length", thing.length);
 		return thing.length==0;
@@ -229,8 +238,30 @@ public class Robot extends IterativeRobot {
 		return x;
 	}
 	
-//	public static void main(String[] args)
-//	{
-//		EmulatorControl.start(9999, Robot.class);
-//	}
+	public void getAreas()
+	{
+		prefs = Preferences.getInstance();
+		String raw = prefs.getString("Areas", "");
+		ArrayList<Double> toReturn = new ArrayList<Double>();
+		StringTokenizer st = new StringTokenizer(raw, ",");
+		while(st.hasMoreTokens())
+		{
+			toReturn.add(Double.parseDouble(st.nextToken().trim()));
+		}
+		
+		RobotMap.area = toReturn;
+	}
+
+	public void getRPMs()
+	{
+		prefs = Preferences.getInstance();
+		String raw = prefs.getString("RPMs", "");
+		ArrayList<Integer> toReturn = new ArrayList<Integer>();
+		StringTokenizer st = new StringTokenizer(raw, ",");
+		while(st.hasMoreTokens())
+		{
+			toReturn.add(Integer.parseInt(st.nextToken().trim()));
+		}
+		RobotMap.rpm = toReturn;
+	}
 }

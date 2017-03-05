@@ -28,55 +28,39 @@ public class GearArm extends Subsystem {
 		//declaring the location of the arm electrically
 	}
     
+	public double currentposition()
+	{
+		return GearArm.getPosition();
+	}
 
 	
     public void initDefaultCommand() {
-    	int absolutePosition = GearArm.getPulseWidthPosition() & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
+//    	int absolutePosition = GearArm.getPulseWidthPosition() & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
         /* use the low level API to set the quad encoder signal */
-        GearArm.setEncPosition(absolutePosition);
-        
+    	GearArm.setPosition(0);
         /* choose the sensor and sensor direction */
         GearArm.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
         GearArm.reverseSensor(false);
 
         /* set the peak and nominal outputs, 12V means full */
         GearArm.configNominalOutputVoltage(+0f, -0f);
-        GearArm.configPeakOutputVoltage(+4f, -4f);
+        GearArm.configPeakOutputVoltage(+12f, -12f);
         /* set the allowable closed-loop error,
          * Closed-Loop output will be neutral within this range.
          * See Table in Section 17.2.1 for native units per rotation. 
          */
         GearArm.setAllowableClosedLoopErr(RobotMap.ArmError); 
-        GearArm.setProfile(RobotMap.ArmProfile);
+        GearArm.setProfile(0);
         GearArm.setF(RobotMap.ArmkF);
         GearArm.setP(RobotMap.ArmkP);
         GearArm.setI(RobotMap.ArmkI); 
         GearArm.setD(RobotMap.ArmkD); 
     }
-    public void setPosition(){
+    public void setPosition(double rotations){
     	
-    	double motorOutput = GearArm.getOutputVoltage()/GearArm.getBusVoltage();
-		printer.append("\tout:");
-		printer.append(motorOutput);
-        printer.append("\tpos:");
-        printer.append(GearArm.getPosition() );
-    	targetPositionRotations = RobotMap.armTargetRotations;
-    		/* Position mode - button just pressed */ 
-        	GearArm.changeControlMode(TalonControlMode.Position);
-        	GearArm.set(targetPositionRotations); 
-    	
-    	if( GearArm.getControlMode() == TalonControlMode.Position) {
-        	/* append more signals to print when in speed mode. */
-        	printer.append("\terrNative:");
-        	printer.append(GearArm.getClosedLoopError());
-        	printer.append("\ttrg:");
-        	printer.append(targetPositionRotations);
-        }
-    	if(++counter >= 10) {
-        	counter = 0;
-        	System.out.println(printer.toString());
-        }
-    	printer.setLength(0);
+    	double motorOutput = GearArm.getOutputVoltage()/GearArm.getBusVoltage(); 
+        GearArm.changeControlMode(TalonControlMode.Position);
+       	GearArm.set(targetPositionRotations); 
     }
     
     public void setTalonMode(){
@@ -84,36 +68,15 @@ public class GearArm extends Subsystem {
     }
     
     public void raise() {
-    	GearArm.set(RobotMap.armRaiseSpeed);			//sets the raising speed to the gear collector
+    	GearArm.changeControlMode(TalonControlMode.Position);
+    	GearArm.set(0.25);			//sets the raising speed to the gear collector
     }
     public void lower() {
 
     	double motorOutput = GearArm.getOutputVoltage()/GearArm.getBusVoltage();
-		printer.append("\tout:");
-		printer.append(motorOutput);
-        printer.append("\tpos:");
-        printer.append(GearArm.getPosition() );
-    	
-    		/* Position mode - button just pressed */
-        	targetPositionRotations = RobotMap.armTargetRotations * .8; 
         	GearArm.changeControlMode(TalonControlMode.Position);
-        	GearArm.set(targetPositionRotations); 
+        	GearArm.set(0); 
     	
-    	if( GearArm.getControlMode() == TalonControlMode.Position) {
-        	/* append more signals to print when in speed mode. */
-        	printer.append("\terrNative:");
-        	printer.append(GearArm.getClosedLoopError());
-        	printer.append("\ttrg:");
-        	printer.append(targetPositionRotations);
-        }
-    	if(++counter >= 10) {
-        	counter = 0;
-        	System.out.println(printer.toString());
-        }
-    	printer.setLength(0);		//sets the lowering speed of the collector
-    }
-    public void stop() {
-    	GearArm.set(0);									//sets the raising the arm speed to 0
     }
 }
 

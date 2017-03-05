@@ -10,8 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LowerGear extends Command {
 
     public LowerGear() {
-    	requires(Robot.geararm);
-    	setTimeout(4);				//sets the command to end after 4 seconds
+//    	requires(Robot.geararm);
     }
 
     
@@ -21,17 +20,18 @@ public class LowerGear extends Command {
 
   
     protected void execute() {
-    	Robot.geararm.lower();		//tells the geararm to go back down to the ground
+    	Robot.geararm.lower();
     }
 
     
     protected boolean isFinished() {
-        return isTimedOut();		//stops the command when the command times out
+//        return isTimedOut();		//stops the command when the command times out
+    	return true;
     }
 
  
     protected void end() {
-    	Robot.geararm.stop(); 		//sets the geararm motor to 0 after the command is done exexuting
+//    	Robot.geararm.lower(); 		//sets the geararm motor to 0 after the command is done exexuting
     }
 
     

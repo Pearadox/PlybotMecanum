@@ -16,8 +16,10 @@ import org.usfirst.frc.team5414.robot.commands.GearCollectCommand;
 import org.usfirst.frc.team5414.robot.commands.GoToPeg;
 import org.usfirst.frc.team5414.robot.commands.LiftingGroup;
 import org.usfirst.frc.team5414.robot.commands.LowerGear;
+import org.usfirst.frc.team5414.robot.commands.RaiseArm;
 import org.usfirst.frc.team5414.robot.commands.ServoCommand;
 import org.usfirst.frc.team5414.robot.commands.ServoIncremental;
+import org.usfirst.frc.team5414.robot.commands.Shoot;
 import org.usfirst.frc.team5414.robot.commands.SpitGear;
 import org.usfirst.frc.team5414.robot.commands.ToggleLight;
 
@@ -41,7 +43,8 @@ public class OI {
 	
 	public OI(){
 
-		JoystickButton ActivateButterfly = new JoystickButton(stick, RobotMap.BtnButterfly);
+//		JoystickButton ActivateButterfly = new JoystickButton(stick, RobotMap.BtnButterfly);
+		JoystickButton Shoot = new JoystickButton(stick,RobotMap.BtnShoot);
 		JoystickButton ToggleLight = new JoystickButton(stick, RobotMap.BtnLight);
 		JoystickButton ActivateHalf = new JoystickButton(stick, RobotMap.BtnHalf);
 		JoystickButton RobotAlign = new JoystickButton(stick, RobotMap.BtnVision);
@@ -50,25 +53,26 @@ public class OI {
 		JoystickButton CollectGear = new JoystickButton(stick, RobotMap.BtnCollectGear);
 		JoystickButton CollectGearSpitOut = new JoystickButton(stick, RobotMap.BtnCollectGearSpit);
 		JoystickButton LowerArm = new JoystickButton(stick, RobotMap.BtnLower);
-		JoystickButton servoTurn = new JoystickButton(stick, RobotMap.servo60);
-		JoystickButton servoSLowly = new JoystickButton(stick, RobotMap.servoSlow);
+		JoystickButton RaiseArm = new JoystickButton(stick, RobotMap.BtnRaise);
+//		JoystickButton servoTurn = new JoystickButton(stick, RobotMap.servo60);
+//		JoystickButton servoSLowly = new JoystickButton(stick, RobotMap.servoSlow);
 		JoystickButton DriveOneRotation = new JoystickButton(stick, 12);
 		
 		DriveOneRotation.whenPressed(new DriveEncDist(1));
 		
 		//Butterfly Drive commands for solonoids
-		ActivateButterfly.whenPressed(new ActivateTraction());
+//		ActivateButterfly.whenPressed(new ActivateTraction());
 //		ActivateHalf.whenPressed(new Activatehalf());
 
-
+		Shoot.whenPressed(new Shoot());
 		
 		//Vision commands for light & Finding peg
 		RobotAlign.whenPressed(new GoToPeg());
 		ToggleLight.whenPressed(new ToggleLight());
 		
 		//Code for Starting and stopping the climbing
-		servoTurn.whenPressed(new servoRotate());
-		servoSLowly.whenPressed(new ServoCommand());
+//		servoTurn.whenPressed(new servoRotate());
+//		servoSLowly.whenPressed(new ServoCommand());
 		
 		Climbing.whenPressed(new LiftingGroup());			//I edited Allen's command group, didnt really need cmdgroup for this. Could be achieved in one command
 		PlsStopClimbing.whenPressed(new ClimberStop());		//Sets the climbing motor to 0
@@ -77,6 +81,7 @@ public class OI {
 		CollectGear.whenPressed(new GearCollectCommand()); 		//strats intake, stops when button released, then raises arm into limit switch
 		CollectGearSpitOut.whenPressed(new SpitGear());			//spits out gear
 		LowerArm.whenPressed(new LowerGear());
+		RaiseArm.whenPressed(new RaiseArm());
 		
 		
 	}

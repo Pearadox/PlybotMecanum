@@ -14,7 +14,8 @@ public class RobotMap {
 	// public static int rightMotor = 2;
 
 	//Buttons for Joystick
-	public static int BtnButterfly= 1;			//activates all butterfly wheels
+//	public static int BtnButterfly= 1;			//activates all butterfly wheels
+	public static int BtnShoot = 1;
 	public static int BtnHalf= 2;				//Activate half solonoids 
 	public static int BtnLight= 3;				//button to turn on light
 	public static int BtnVision = 4;			//starts vision code
@@ -23,7 +24,8 @@ public class RobotMap {
 	public static int servo60 = 7;
 	public static int encoderOn = 8;
 	public static int BtnLower = 9;
-	public static int servoSlow = 10;
+	public static int BtnRaise = 10;
+//	public static int servoSlow = 10;
 	public static int BtnCollectGear = 11; 		//Will intake AND raise the assembly with limit switch
 	public static int BtnCollectGearSpit = 12; 	//will lower the arm assembly at set speed no limitswitch
 	
@@ -40,12 +42,12 @@ public class RobotMap {
 	public static double ShooterRPM = 3000;
 	
 	//Closed-position loop for arm
-	public static int ArmError = 205;
+	public static int ArmError = 2;
 	public static int ArmProfile = 0;
 	public static double ArmkF = 0;
-	public static double ArmkP = 0.5;
-	public static double ArmkI = 0;
-	public static double ArmkD = 0;
+	public static double ArmkP = 7.7;
+	public static double ArmkI = 0.0002;
+	public static double ArmkD = 130;
 	
 	
 	//Driving ports
@@ -100,6 +102,8 @@ public class RobotMap {
 	public static int DIOencoderBLb = 3;
 	
 	//Shooter Lookup Table
-	public static ArrayList<Double> distance = new ArrayList<Double>();
+//	public static double[] area;
+//	public static int[] rpm;
+	public static ArrayList<Double> area = new ArrayList<Double>();
 	public static ArrayList<Integer> rpm = new ArrayList<Integer>();
 }
