@@ -23,6 +23,7 @@ import edu.wpi.cscore.UsbCamera;
 import org.usfirst.frc.team5414.robot.commands.AutonomousLeftSide;
 import org.usfirst.frc.team5414.robot.commands.AutonomousMiddle;
 import org.usfirst.frc.team5414.robot.commands.AutonomousRightSide;
+//import org.usfirst.frc.team5414.robot.commands.EncoderDrives;
 import org.usfirst.frc.team5414.robot.commands.RaiseArm;
 import org.usfirst.frc.team5414.robot.commands.SetCompPractWheel;
 import org.usfirst.frc.team5414.robot.commands.SetPlybotWheel;
@@ -108,6 +109,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 		revdigitboard.clear();
+		climber.stop();
 	}
 
 	@Override
@@ -150,6 +152,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		navx.zeroYaw();
 		navx.reset();
+//		autonomousCommand = (Command) new EncoderDrives(3.2);
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}

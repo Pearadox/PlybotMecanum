@@ -154,8 +154,20 @@ public class Drivetrain extends Subsystem {
 //    	drive.arcadeDrive(throttle,twist);
 //    }
     
-    
-    
+    public double getDistanceL()
+	{
+		return encoderBL.getDistance();
+	}
+	public double getDistanceR()
+	{
+		return encoderBR.getDistance();
+	}
+	public void reset()
+	{
+		encoderBL.reset();
+		encoderBR.reset();
+	}
+	
     public void stop(){
     		drive.tankDrive(0,0);
     }	

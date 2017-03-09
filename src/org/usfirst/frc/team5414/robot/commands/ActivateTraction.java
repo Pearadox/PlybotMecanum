@@ -28,9 +28,9 @@ public class ActivateTraction extends Command {
 
     
     protected boolean isFinished() {
-//    	if(!Robot.oi.getJoystick1().getRawButton(RobotMap.BtnButterfly)){		//Stops the command when the BtnButterfly is no longer being pressed
-//    		return true;
-//    	}
+    	if(!Robot.oi.getJoystick1().getRawButton(RobotMap.BtnButterfly)){		//Stops the command when the BtnButterfly is no longer being pressed
+    		return true;
+    	}
         return false;
     }
 

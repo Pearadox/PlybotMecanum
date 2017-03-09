@@ -14,23 +14,27 @@ public class RobotMap {
 	// public static int rightMotor = 2;
 
 	//Buttons for Joystick
-//	public static int BtnButterfly= 1;			//activates all butterfly wheels
-	public static int BtnShoot = 1;
-	public static int BtnHalf= 2;				//Activate half solonoids 
-	public static int BtnLight= 3;				//button to turn on light
-	public static int BtnVision = 4;			//starts vision code
-	public static int BtnClimber = 5;			//climberbutton raise
+	public static int BtnButterfly= 1;			//activates all butterfly wheels
+//	public static int BtnShoot = 1;
+	public static int BtnHalf= 5;				//Activate half solonoids 
+	public static int BtnLight= 7;				//button to turn on light
+	public static int BtnClose = 4;			//starts vision code
+	public static int BtnClimber = 2;			//climberbutton raise
 	public static int BtnStop = 6;				//climber button stop, set motor 0
-	public static int servo60 = 7;
+	public static int servo60 = 3;
 	public static int encoderOn = 8;
 	public static int BtnLower = 9;
 	public static int BtnRaise = 10;
 //	public static int servoSlow = 10;
 	public static int BtnCollectGear = 11; 		//Will intake AND raise the assembly with limit switch
-	public static int BtnCollectGearSpit = 12; 	//will lower the arm assembly at set speed no limitswitch
+//	public static int BtnCollectGearSpit = 12; 	//will lower the arm assembly at set speed no limitswitch
+	public static int BtnBoilerVision = 12;
 	
 	public static double wheelDiameter = 6;
-	public static int EncoderTicks = 1440 / 4 * 26 / 12 * 116/100;	
+	public static final double compBotEnc = 128;
+	public static final int practiceBotEnc = 1440;
+	public static double EncoderTicks = compBotEnc / 4 * 26 / 42 * 118 / 100;					//make sure to swap these values later
+	public static double EncoderTicksMechanum = compBotEnc / 4 * 26 / 16 * 118 / 100;
 	public static double lengthOfRotation = (wheelDiameter / 2) * (2 * Math.PI);
 	public static double lengthOfTick = lengthOfRotation / EncoderTicks;
 	
@@ -61,7 +65,7 @@ public class RobotMap {
 	
 	//pwm for collector wheels & arms
 	public static int PWMGearWheels = 4;
-	public static int PWMGearArm = 0;
+	
 	
 	//arm & collector speeds
 	public static double armTargetRotations = .3;
@@ -74,7 +78,7 @@ public class RobotMap {
 	public static int PWMlifter = 6;
 	public static int PDPclimber = 2;
 	public static int climberCurrentSpike = 64;
-	public static double lifterholdspeed = -0.4;
+	public static double lifterholdspeed = -0.3;
 	public static double lifterLiftSpeed = -1.0;
 	
 	//Autonomous settings
@@ -83,15 +87,14 @@ public class RobotMap {
 	//Servo Ports
 	public static int ServoPort = 8;  		//Set to correct Port for servos for climber
 	public static int ServoPort2 = 9; 		//Set to correct Port for servos for climber
-	public static int Servo1Angle = 90;	//set range of motion of the servos
-	public static int Servo2Angle = 0;
-	public static int Servo1Zero = 0;
-	public static int Servo2Zero = 90;
+	public static int Servo1Angle = 155;	//set range of motion of the servos
+	public static int Servo2Angle = 60;
+	
 	
 	//Limit switch port
 	public static int LimitInput = 10;  //Set limit to the digitalInput
 	
-	//encoder DIO ports
+	//DIO ports
 	public static int DIOencoderFRa = 8;
 	public static int DIOencoderFRb = 9;
 	public static int DIOencoderFLa = 4;
@@ -100,6 +103,8 @@ public class RobotMap {
 	public static int DIOencoderBRb = 7;
 	public static int DIOencoderBLa = 2;
 	public static int DIOencoderBLb = 3;
+	public static int DIOGearArm = 0;
+	public static int DIOClimberLimit = 1;
 	
 	//Shooter Lookup Table
 //	public static double[] area;

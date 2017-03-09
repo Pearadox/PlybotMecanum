@@ -15,12 +15,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class GearCollector extends Subsystem {
 
 	private Spark gearwheels;
-	private DigitalInput limitSwitch;
+//	private DigitalInput limitSwitch;
 	
 	public GearCollector() {
 		super();
 		gearwheels = new Spark(RobotMap.PWMGearWheels); 
-		limitSwitch = new DigitalInput(RobotMap.LimitInput);
+//		limitSwitch = new DigitalInput(RobotMap.LimitInput);
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.s
@@ -35,8 +35,8 @@ public class GearCollector extends Subsystem {
     	gearwheels.set(RobotMap.outtakeSpeed);		//sets the speed for the Gear collector wheels to outake
     }
     public boolean isLimitSet(){
-    	SmartDashboard.putBoolean("Limit", limitSwitch.get());		//publishes condition of limit switch to the smartdashboard
-    	return limitSwitch.get();									// returns true or false depending on condition of switch
+//    	SmartDashboard.putBoolean("Limit", limitSwitch.get());		//publishes condition of limit switch to the smartdashboard
+    	return true;								// returns true or false depending on condition of switch
     }
    
     	

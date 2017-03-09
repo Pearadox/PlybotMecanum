@@ -24,6 +24,7 @@ int x = 0;
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	SmartDashboard.putNumber("servo1Angle", Robot.servo1.servo.getAngle());
     	Robot.servo1.setAngleLeft(x/1.4);
     	x++;
     }

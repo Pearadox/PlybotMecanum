@@ -9,7 +9,7 @@ public class AutonomousRightSide extends CommandGroup {
 
     public AutonomousRightSide() {
     
-    	addSequential(new DriveEncDist(2));
+//    	addSequential(new DriveEncDist(2));
     	addSequential(new RotateRight(45));
     	addSequential(new GoToPeg());
 

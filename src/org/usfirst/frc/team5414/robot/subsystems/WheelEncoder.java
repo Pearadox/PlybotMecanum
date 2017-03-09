@@ -12,32 +12,49 @@ public class WheelEncoder extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	Encoder encoder;
+	Encoder encoderL, encoderR;
 	
 	public WheelEncoder()
 	{
-		encoder = new Encoder(0, 1, false, Encoder.EncodingType.k2X);
+//		encoderL = new Encoder(0, 1, false, Encoder.EncodingType.k2X);
+//		encoderR = new Encoder(2, 3, false, Encoder.EncodingType.k2X);
 		
 	}
 	 
-	public double getDistance()
+	public double getDistanceL()
 	{
-		return encoder.getDistance();
+		return encoderL.getDistance();
+	}
+	public double getDistanceR()
+	{
+		return encoderR.getDistance();
 	}
 	
-	public double getRate()
+	public double getRateL()
 	{
-		return encoder.getRate();
+		return encoderL.getRate();
+	}
+	
+	public double getRateR()
+	{
+		return encoderR.getRate();
 	}
 
 	public void reset()
 	{
-		encoder.reset();
+		encoderL.reset();
+		encoderR.reset();
 	}
-	public int get()
+	
+	public int getL()
 	{
-		return encoder.get();
+		return encoderL.get();
 	}
+	public int getR()
+	{
+		return encoderR.get();
+	}
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

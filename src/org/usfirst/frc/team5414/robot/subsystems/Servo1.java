@@ -2,6 +2,7 @@ package org.usfirst.frc.team5414.robot.subsystems;
 
 import org.usfirst.frc.team5414.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -14,10 +15,10 @@ public class Servo1 extends Subsystem {
         servo2 = new Servo(RobotMap.ServoPort2);//DON'T FORGET TO CHANGE PORT #!
     }
 	
-	public void setAngle(double degree,double degrees)
+	public void Zero()
 	{
-		servo.setAngle(degree);		//may have to inverse depending on which servo is which
-		servo2.setAngle(degrees);
+//		servo.setAngle(RobotMap.Servo1AngleOpen);		//may have to inverse depending on which servo is which
+//		servo2.setAngle(RobotMap.Servo2AngleOpen);
 	}
 	public void setAngleLeft(double angle){
 		servo.setAngle(angle);
@@ -29,10 +30,10 @@ public class Servo1 extends Subsystem {
 		servo.setSpeed(.5);
 		servo2.setSpeed(-.5);
 	}
-	public void Zero()
+	public void setAngle()
 	{
-		servo.setAngle(0);							//sets the angle of both of the gyros equal to 0. Essentially just resets the gyro
-		servo2.setAngle(90);
+//		servo.setAngle(RobotMap.Servo1AngleClose);							//sets the angle of both of the gyros equal to 0. Essentially just resets the gyro
+//		servo2.setAngle(RobotMap.Servo2AngleClose);
 		
 	}
 	

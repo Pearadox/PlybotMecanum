@@ -28,10 +28,10 @@ public class SpitGear extends Command {
 
     
     protected boolean isFinished() {
-    	if(!Robot.oi.getJoystick1().getRawButton(RobotMap.BtnCollectGearSpit)){			//stops the command if the button BtnCollectGearSpit is no longer being pressed 
+//    	if(!Robot.oi.getJoystick1().getRawButton(RobotMap.BtnCollectGearSpit)){			//stops the command if the button BtnCollectGearSpit is no longer being pressed 
     		return true;
-    	}
-        return false;
+//    	}
+//        return false;
     }
 
     

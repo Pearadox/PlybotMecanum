@@ -9,7 +9,7 @@ public class AutonomousMiddle extends CommandGroup {
 
     public AutonomousMiddle() {
     	
-    	addSequential(new DriveEncDist(1));
+//    	addSequential(new DriveEncDist(1));
     	
     	addSequential(new PivotToCenter());		//Rotate to center of targets
     	

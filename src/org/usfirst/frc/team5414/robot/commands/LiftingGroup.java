@@ -9,6 +9,7 @@ public class LiftingGroup extends CommandGroup {
 
     public LiftingGroup() {
         // Add Commands here:
+//    	addSequential(new ServoIncremental());
         addSequential(new Lifting());
 //      addSequential(new Holding());
         // these will run in order.

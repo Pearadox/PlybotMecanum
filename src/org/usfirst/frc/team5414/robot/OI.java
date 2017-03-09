@@ -10,19 +10,22 @@ import org.usfirst.frc.team5414.robot.commands.Activatehalf;
 //import org.usfirst.frc.team5414.robot.commands.Activatehalf;
 import org.usfirst.frc.team5414.robot.commands.ClimberStop;
 import org.usfirst.frc.team5414.robot.commands.CollectGear;
-import org.usfirst.frc.team5414.robot.commands.DriveEncDist;
+//import org.usfirst.frc.team5414.robot.commands.DriveEncDist;
+//import org.usfirst.frc.team5414.robot.commands.EncoderDrives;
 import org.usfirst.frc.team5414.robot.commands.GearCollectCommand;
 //import org.usfirst.frc.team5414.robot.commands.Align;
 import org.usfirst.frc.team5414.robot.commands.GoToPeg;
 import org.usfirst.frc.team5414.robot.commands.LiftingGroup;
 import org.usfirst.frc.team5414.robot.commands.LowerGear;
 import org.usfirst.frc.team5414.robot.commands.RaiseArm;
+//import org.usfirst.frc.team5414.robot.commands.ServoClose;
 import org.usfirst.frc.team5414.robot.commands.ServoCommand;
 import org.usfirst.frc.team5414.robot.commands.ServoIncremental;
+//import org.usfirst.frc.team5414.robot.commands.ServoZero;
 import org.usfirst.frc.team5414.robot.commands.Shoot;
 import org.usfirst.frc.team5414.robot.commands.SpitGear;
 import org.usfirst.frc.team5414.robot.commands.ToggleLight;
-
+import org.usfirst.frc.team5414.robot.commands.TurnToBoiler;
 import org.usfirst.frc.team5414.robot.commands.servoRotate;
 
 /**
@@ -43,35 +46,39 @@ public class OI {
 	
 	public OI(){
 
-//		JoystickButton ActivateButterfly = new JoystickButton(stick, RobotMap.BtnButterfly);
-		JoystickButton Shoot = new JoystickButton(stick,RobotMap.BtnShoot);
+		JoystickButton ActivateButterfly = new JoystickButton(stick, RobotMap.BtnButterfly);
+//		JoystickButton Shoot = new JoystickButton(stick,RobotMap.BtnShoot);
 		JoystickButton ToggleLight = new JoystickButton(stick, RobotMap.BtnLight);
 		JoystickButton ActivateHalf = new JoystickButton(stick, RobotMap.BtnHalf);
-		JoystickButton RobotAlign = new JoystickButton(stick, RobotMap.BtnVision);
+//		JoystickButton RobotAlign = new JoystickButton(stick, RobotMap.BtnVision);
+		JoystickButton closing = new JoystickButton(stick, RobotMap.servo60);
 		JoystickButton Climbing = new JoystickButton(stick, RobotMap.BtnClimber);
 		JoystickButton PlsStopClimbing = new JoystickButton(stick, RobotMap.BtnStop);
 		JoystickButton CollectGear = new JoystickButton(stick, RobotMap.BtnCollectGear);
-		JoystickButton CollectGearSpitOut = new JoystickButton(stick, RobotMap.BtnCollectGearSpit);
+//		JoystickButton CollectGearSpitOut = new JoystickButton(stick, RobotMap.BtnCollectGearSpit);
 		JoystickButton LowerArm = new JoystickButton(stick, RobotMap.BtnLower);
 		JoystickButton RaiseArm = new JoystickButton(stick, RobotMap.BtnRaise);
-//		JoystickButton servoTurn = new JoystickButton(stick, RobotMap.servo60);
+		JoystickButton servoTurn = new JoystickButton(stick, RobotMap.BtnClose);
 //		JoystickButton servoSLowly = new JoystickButton(stick, RobotMap.servoSlow);
-		JoystickButton DriveOneRotation = new JoystickButton(stick, 12);
+//		JoystickButton DriveOneRotation = new JoystickButton(stick, 12);
+		JoystickButton BoilerVision = new JoystickButton(stick, RobotMap.BtnBoilerVision);
 		
-		DriveOneRotation.whenPressed(new DriveEncDist(1));
+//		DriveOneRotation.whenPressed(new EncoderDrives(3.2));
 		
 		//Butterfly Drive commands for solonoids
-//		ActivateButterfly.whenPressed(new ActivateTraction());
+		ActivateButterfly.whenPressed(new ActivateTraction());
 //		ActivateHalf.whenPressed(new Activatehalf());
 
-		Shoot.whenPressed(new Shoot());
+//		Shoot.whenPressed(new Shoot());
 		
 		//Vision commands for light & Finding peg
-		RobotAlign.whenPressed(new GoToPeg());
+//		RobotAlign.whenPressed(new GoToPeg());
 		ToggleLight.whenPressed(new ToggleLight());
+		BoilerVision.whenPressed(new TurnToBoiler());
 		
 		//Code for Starting and stopping the climbing
-//		servoTurn.whenPressed(new servoRotate());
+//		servoTurn.whenPressed(new ServoZero());
+//		closing.whenPressed(new ServoClose());
 //		servoSLowly.whenPressed(new ServoCommand());
 		
 		Climbing.whenPressed(new LiftingGroup());			//I edited Allen's command group, didnt really need cmdgroup for this. Could be achieved in one command
@@ -79,10 +86,9 @@ public class OI {
 		
 		//GearCollector intake & raise & lowering commands
 		CollectGear.whenPressed(new GearCollectCommand()); 		//strats intake, stops when button released, then raises arm into limit switch
-		CollectGearSpitOut.whenPressed(new SpitGear());			//spits out gear
+//		CollectGearSpitOut.whenPressed(new SpitGear());			//spits out gear
 		LowerArm.whenPressed(new LowerGear());
 		RaiseArm.whenPressed(new RaiseArm());
-		
 		
 	}
 	public Joystick getJoystick1()

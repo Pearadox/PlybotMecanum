@@ -47,7 +47,7 @@ public class ServoIncremental extends Command {
 //    	}
     	
     	
-    		Robot.servo1.setAngle(x/1.4, (90-(x/1.4)));
+//    		Robot.servo1.setAngle(x/1.4, (90-(x/1.4)));
     		x++;
     	
     }

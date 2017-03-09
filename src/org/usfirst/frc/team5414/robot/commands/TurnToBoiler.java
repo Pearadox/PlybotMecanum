@@ -2,6 +2,7 @@ package org.usfirst.frc.team5414.robot.commands;
 
 import org.usfirst.frc.team5414.robot.Robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -11,6 +12,7 @@ public class TurnToBoiler extends Command {
 
 	double[] AreaArray;
 	double[] CenterX;
+	int cameraCenter = 180;
 	boolean passed = false;
 	
     public TurnToBoiler() {
@@ -63,6 +65,17 @@ public class TurnToBoiler extends Command {
     		}
     		if(passed) break;
    		}
+    	
+    	if(CenterX[0] >= cameraCenter + CenterXThreshold && passed)
+    	{
+    		Robot.drivetrain.drive(-.6, .6);
+    	}
+    	else if(CenterX[0] <= cameraCenter - CenterXThreshold && passed)
+    	{
+    		Robot.drivetrain.drive(.6 , -.6);
+    	}
+    	
+    	DriverStation.reportWarning(passed + "", true);
     	if(!passed) Robot.drivetrain.drive(-.6, .6);
     	else Robot.drivetrain.stop();
     }
@@ -80,5 +93,6 @@ public class TurnToBoiler extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.drivetrain.stop();
     }
 }

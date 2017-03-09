@@ -23,7 +23,7 @@ public class GearArm extends Subsystem {
 	
 	public GearArm() {
 		super();
-		GearArm = new CANTalon(RobotMap.PWMGearArm);
+		GearArm = new CANTalon(RobotMap.DIOGearArm);
 		printer  = new StringBuilder();
 		//declaring the location of the arm electrically
 	}
