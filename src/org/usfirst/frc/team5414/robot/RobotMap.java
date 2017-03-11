@@ -15,20 +15,18 @@ public class RobotMap {
 
 	//Buttons for Joystick
 	public static int BtnButterfly= 1;			//activates all butterfly wheels
-//	public static int BtnShoot = 1;
-	public static int BtnHalf= 5;				//Activate half solonoids 
-	public static int BtnLight= 7;				//button to turn on light
-	public static int BtnClose = 4;			//starts vision code
-	public static int BtnClimber = 2;			//climberbutton raise
-	public static int BtnStop = 6;				//climber button stop, set motor 0
-	public static int servo60 = 3;
-	public static int encoderOn = 8;
+	public static int BtnClimber = 2;
+	public static int ServoClose = 3;
+	public static int BtnOpen = 4;
+	public static int half = 5;
+	public static int BtnStop = 6;	
+	
 	public static int BtnLower = 9;
 	public static int BtnRaise = 10;
-//	public static int servoSlow = 10;
-	public static int BtnCollectGear = 11; 		//Will intake AND raise the assembly with limit switch
-//	public static int BtnCollectGearSpit = 12; 	//will lower the arm assembly at set speed no limitswitch
-	public static int BtnBoilerVision = 12;
+	
+	public static int BtnCollectGear = 11; 		
+	public static int BtnCollectGearSpit = 12; 	
+	//***clean****
 	
 	public static double wheelDiameter = 6;
 	public static final double compBotEnc = 128;
@@ -39,6 +37,7 @@ public class RobotMap {
 	public static double lengthOfTick = lengthOfRotation / EncoderTicks;
 	
 	//shooter PID loop
+	public static int shooterTalon = 1;
 	public static double ShooterkP = 7.7;
 	public static double ShooterkI = 0;
 	public static double ShooterkD = 850;
@@ -46,12 +45,15 @@ public class RobotMap {
 	public static double ShooterRPM = 3000;
 	
 	//Closed-position loop for arm
-	public static int ArmError = 2;
+	public static int ArmError = 0;
 	public static int ArmProfile = 0;
 	public static double ArmkF = 0;
-	public static double ArmkP = 7.7;
+	public static double ArmkP = 5;
 	public static double ArmkI = 0.0002;
 	public static double ArmkD = 130;
+	
+	//GyroPort
+	public static int GyroPort = 0;
 	
 	
 	//Driving ports
@@ -68,18 +70,22 @@ public class RobotMap {
 	
 	
 	//arm & collector speeds
+	public static double ArmPositionDown = .25;
+	public static double ArmPositionUp = 0.0;
 	public static double armTargetRotations = .3;
-	public static double armRaiseSpeed = 0.3;
+	public static double armRaiseSpeed= 0.3;
 	public static double armLowerSpeed = -0.2;
 	public static double intakeSpeed = -1;
-	public static double outtakeSpeed = .3;
+	public static double outtakeSpeed = 1;
 	
 	//climber stuffs
 	public static int PWMlifter = 6;
+	
 	public static int PDPclimber = 2;
 	public static int climberCurrentSpike = 64;
 	public static double lifterholdspeed = -0.3;
 	public static double lifterLiftSpeed = -1.0;
+	public static double lifterLimitSwitchSpeed = 1;
 	
 	//Autonomous settings
 	public static double  goToPegSpeed= -.4;
@@ -87,8 +93,21 @@ public class RobotMap {
 	//Servo Ports
 	public static int ServoPort = 8;  		//Set to correct Port for servos for climber
 	public static int ServoPort2 = 9; 		//Set to correct Port for servos for climber
-	public static int Servo1Angle = 155;	//set range of motion of the servos
-	public static int Servo2Angle = 60;
+	public static int Servo1AngleOpen = 155;	//set range of motion of the servos
+	public static int Servo2AngleOpen = 60;
+	public static int Servo1AngleClose = 35; 
+	public static int Servo2AngleClose = 160;
+	
+	//Solenoid ports
+	
+	public static int SolenoidFLa = 3;
+	public static int SolenoidFLb = 4;
+	public static int SolenoidFRa = 2;
+	public static int SolenoidFRb = 5;
+	public static int SolenoidBRa = 0;
+	public static int SolenoidBRb = 7;
+	public static int SolenoidBLa = 1;
+	public static int SolenoidBLb = 6;
 	
 	
 	//Limit switch port

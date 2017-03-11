@@ -1,50 +1,45 @@
 package org.usfirst.frc.team5414.robot.commands;
 
 import org.usfirst.frc.team5414.robot.Robot;
+import org.usfirst.frc.team5414.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class RaiseArm extends Command {
 
-	boolean islimitpressed =false;
+	double downPos = 0.0;
+	
     public RaiseArm() {
-      
     	requires(Robot.geararm);
-    	requires(Robot.gearcollector);
     }
 
-
+    
     protected void initialize() {
-//    	islimitpressed = Robot.gearcollector.isLimitSet();  //makes a boolean that will be used to stop the function if the limit is pressed before command starts
-    }
-
-
-    protected void execute() {
-//    	if (islimitpressed == false)				//if the limit had been pressed intially, it executes nothing for the program and eventually times out
-//    		Robot.geararm.raise();			//if the limit isnt pressed initially, raise the arm
-    	Robot.geararm.raise();
-   	}
-    	
-
-
-    protected boolean isFinished() {
-//    	if(!Robot.gearcollecto?r.isLimitSet()){		//if the limit switch has been pressed, this stops the command
-    		return true;
-//    	}
-//        return isTimedOut();						//stops the command after 5 seconds
+    	downPos = Robot.prefs.getDouble("DownPosition", RobotMap.ArmPositionUp);
     }
 
   
-    protected void end() {
-//    	Robot.geararm.setTalonMode();
-    	Robot.geararm.raise();						//after command has ended the gear arm motor is set to 0
-    	
+    protected void execute() {
+    	SmartDashboard.putNumber("CurrentArmPosition", Robot.geararm.GearArm.getPulseWidthPosition());
+    	Robot.geararm.setPosition(downPos);
     }
 
+    
+    protected boolean isFinished() {
+//        return isTimedOut();		//stops the command when the command times out
+    	return true;
+    }
 
+ 
+    protected void end() {
+//    	Robot.geararm.lower(); 		//sets the geararm motor to 0 after the command is done exexuting
+    }
+
+    
     protected void interrupted() {
     }
 }

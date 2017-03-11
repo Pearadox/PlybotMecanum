@@ -5,27 +5,30 @@ import edu.wpi.first.wpilibj.Joystick;
 
 import org.usfirst.frc.team5414.robot.commands.ActivateTraction;
 import org.usfirst.frc.team5414.robot.commands.Activatehalf;
+import org.usfirst.frc.team5414.robot.commands.ClimberLimitSwitch;
 //import org.usfirst.frc.team5414.robot.commands.ActivateButt;
 //import org.usfirst.frc.team5414.robot.commands.ActivateTract;
 //import org.usfirst.frc.team5414.robot.commands.Activatehalf;
 import org.usfirst.frc.team5414.robot.commands.ClimberStop;
 import org.usfirst.frc.team5414.robot.commands.CollectGear;
 //import org.usfirst.frc.team5414.robot.commands.DriveEncDist;
-//import org.usfirst.frc.team5414.robot.commands.EncoderDrives;
+import org.usfirst.frc.team5414.robot.commands.EncoderDrives;
 import org.usfirst.frc.team5414.robot.commands.GearCollectCommand;
 //import org.usfirst.frc.team5414.robot.commands.Align;
 import org.usfirst.frc.team5414.robot.commands.GoToPeg;
 import org.usfirst.frc.team5414.robot.commands.LiftingGroup;
-import org.usfirst.frc.team5414.robot.commands.LowerGear;
 import org.usfirst.frc.team5414.robot.commands.RaiseArm;
-//import org.usfirst.frc.team5414.robot.commands.ServoClose;
+import org.usfirst.frc.team5414.robot.commands.ScoringGearCommandGroup;
+import org.usfirst.frc.team5414.robot.commands.LowerArm;
+import org.usfirst.frc.team5414.robot.commands.ServoClose;
+import org.usfirst.frc.team5414.robot.commands.ServoCloseCommandGroup;
 import org.usfirst.frc.team5414.robot.commands.ServoCommand;
 import org.usfirst.frc.team5414.robot.commands.ServoIncremental;
-//import org.usfirst.frc.team5414.robot.commands.ServoZero;
+import org.usfirst.frc.team5414.robot.commands.ServoZero;
 import org.usfirst.frc.team5414.robot.commands.Shoot;
 import org.usfirst.frc.team5414.robot.commands.SpitGear;
 import org.usfirst.frc.team5414.robot.commands.ToggleLight;
-import org.usfirst.frc.team5414.robot.commands.TurnToBoiler;
+
 import org.usfirst.frc.team5414.robot.commands.servoRotate;
 
 /**
@@ -46,49 +49,54 @@ public class OI {
 	
 	public OI(){
 
+		
+		JoystickButton half = new JoystickButton(stick, RobotMap.half);
 		JoystickButton ActivateButterfly = new JoystickButton(stick, RobotMap.BtnButterfly);
-//		JoystickButton Shoot = new JoystickButton(stick,RobotMap.BtnShoot);
-		JoystickButton ToggleLight = new JoystickButton(stick, RobotMap.BtnLight);
-		JoystickButton ActivateHalf = new JoystickButton(stick, RobotMap.BtnHalf);
-//		JoystickButton RobotAlign = new JoystickButton(stick, RobotMap.BtnVision);
-		JoystickButton closing = new JoystickButton(stick, RobotMap.servo60);
 		JoystickButton Climbing = new JoystickButton(stick, RobotMap.BtnClimber);
+		JoystickButton ServoClose = new JoystickButton(stick, RobotMap.ServoClose);
+		//		JoystickButton Shoot = new JoystickButton(stick,RobotMap.BtnShoot);
+		JoystickButton ServoOpen = new JoystickButton(stick, RobotMap.BtnOpen);
+//		JoystickButton TestingLimit = new JoystickButton(stick, RobotMap.BtnTestLimit);
 		JoystickButton PlsStopClimbing = new JoystickButton(stick, RobotMap.BtnStop);
-		JoystickButton CollectGear = new JoystickButton(stick, RobotMap.BtnCollectGear);
-//		JoystickButton CollectGearSpitOut = new JoystickButton(stick, RobotMap.BtnCollectGearSpit);
+//		JoystickButton ToggleLight = new JoystickButton(stick, RobotMap.BtnLight);
+		//		JoystickButton RobotAlign = new JoystickButton(stick, RobotMap.BtnVision);
 		JoystickButton LowerArm = new JoystickButton(stick, RobotMap.BtnLower);
 		JoystickButton RaiseArm = new JoystickButton(stick, RobotMap.BtnRaise);
-		JoystickButton servoTurn = new JoystickButton(stick, RobotMap.BtnClose);
+		JoystickButton CollectGear = new JoystickButton(stick, RobotMap.BtnCollectGear);
+		JoystickButton CollectGearSpitOut = new JoystickButton(stick, RobotMap.BtnCollectGearSpit);
+		
+		
+		
 //		JoystickButton servoSLowly = new JoystickButton(stick, RobotMap.servoSlow);
 //		JoystickButton DriveOneRotation = new JoystickButton(stick, 12);
-		JoystickButton BoilerVision = new JoystickButton(stick, RobotMap.BtnBoilerVision);
 		
 //		DriveOneRotation.whenPressed(new EncoderDrives(3.2));
 		
 		//Butterfly Drive commands for solonoids
 		ActivateButterfly.whenPressed(new ActivateTraction());
-//		ActivateHalf.whenPressed(new Activatehalf());
+		half.whenPressed(new Activatehalf());
 
 //		Shoot.whenPressed(new Shoot());
 		
 		//Vision commands for light & Finding peg
 //		RobotAlign.whenPressed(new GoToPeg());
-		ToggleLight.whenPressed(new ToggleLight());
-		BoilerVision.whenPressed(new TurnToBoiler());
+//		ToggleLight.whenPressed(new ToggleLight());
+//		TestingLimit.whenPressed(new ClimberLimitSwitch());
 		
 		//Code for Starting and stopping the climbing
-//		servoTurn.whenPressed(new ServoZero());
-//		closing.whenPressed(new ServoClose());
+		ServoOpen.whenPressed(new ServoZero());
+		ServoClose.whenPressed(new ServoCloseCommandGroup());
 //		servoSLowly.whenPressed(new ServoCommand());
 		
-		Climbing.whenPressed(new LiftingGroup());			//I edited Allen's command group, didnt really need cmdgroup for this. Could be achieved in one command
+		Climbing.whenPressed(new LiftingGroup());		
 		PlsStopClimbing.whenPressed(new ClimberStop());		//Sets the climbing motor to 0
 		
 		//GearCollector intake & raise & lowering commands
 		CollectGear.whenPressed(new GearCollectCommand()); 		//strats intake, stops when button released, then raises arm into limit switch
-//		CollectGearSpitOut.whenPressed(new SpitGear());			//spits out gear
-		LowerArm.whenPressed(new LowerGear());
+		CollectGearSpitOut.whenPressed(new SpitGear());			//spits out gear
+		LowerArm.whenPressed(new ScoringGearCommandGroup());
 		RaiseArm.whenPressed(new RaiseArm());
+		
 		
 	}
 	public Joystick getJoystick1()

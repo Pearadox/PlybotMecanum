@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5414.robot.subsystems;
 
 import org.usfirst.frc.team5414.robot.RobotMap;
-//import org.usfirst.frc.team5414.robot.commands.ClimberLimitSwitch;
+import org.usfirst.frc.team5414.robot.commands.ClimberLimitSwitch;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -39,10 +39,14 @@ public class Climber extends Subsystem {
     	lifter.set(RobotMap.lifterholdspeed);		//sets the speed that the climber needs holds itself in place on the rope
     // 3.8 volts @ 20 amps holds lifter
     	// f = .3333 * 1023 / 20000 = .017033
+    	
     }
     
     public void lift() {
     	lifter.set(RobotMap.lifterLiftSpeed);		//sets speed the robot needs to climb the rope
+    }
+    public void startPos() {
+    	lifter.set(RobotMap.lifterLimitSwitchSpeed);
     }
     
     public void stop() {

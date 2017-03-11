@@ -2,6 +2,8 @@ package org.usfirst.frc.team5414.robot.subsystems;
 
 
 
+import org.usfirst.frc.team5414.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -21,7 +23,7 @@ public class NavX extends Subsystem implements PIDSource{
 
     public void initDefaultCommand() {
 //    	ahrs = new AHRS(SPI.Port.kMXP);
-    	ahrs = new AnalogGyro(0);		//declaring gyro
+    	ahrs = new AnalogGyro(RobotMap.GyroPort);		//declaring gyro
     	ahrs.initGyro();				//intitializing the gyro
     }
     

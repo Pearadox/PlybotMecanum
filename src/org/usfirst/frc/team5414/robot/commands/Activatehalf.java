@@ -27,7 +27,7 @@ public class Activatehalf extends Command {
 
     
     protected boolean isFinished() {
-    	if(!Robot.oi.getJoystick1().getRawButton(RobotMap.BtnHalf)){ 		//stops command when BtnHalf is no longer being pressed
+    	if(!Robot.oi.getJoystick1().getRawButton(RobotMap.half)){ 		//stops command when BtnHalf is no longer being pressed
     		return true;
     	}
         return false;

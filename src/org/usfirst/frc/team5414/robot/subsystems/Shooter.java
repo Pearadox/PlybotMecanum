@@ -20,7 +20,7 @@ public class Shooter extends Subsystem {
 
     public void initDefaultCommand() {
         
-    	talon = new CANTalon(1);
+    	talon = new CANTalon(RobotMap.shooterTalon);
     	talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
     	talon.reverseSensor(false);
     	talon.configEncoderCodesPerRev(20);

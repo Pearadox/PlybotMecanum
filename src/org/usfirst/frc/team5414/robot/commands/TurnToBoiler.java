@@ -4,25 +4,28 @@ import org.usfirst.frc.team5414.robot.Robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class TurnToBoiler extends Command {
 
+	int topIndex, botIndex;
 	double[] AreaArray;
 	double[] CenterX;
 	int cameraCenter = 180;
-	boolean passed = false;
+	boolean passed;
+	double CenterThreshold = 10;
+	double kP = 0.003;
 	
     public TurnToBoiler() {
-        
-    	
+    
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	passed = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -46,11 +49,11 @@ public class TurnToBoiler extends Command {
     	
     	double AreaThresholdPercentage = 25; // 25% threshold difference
     	double CenterXThreshold = 20;
-    	boolean passed = false;
+    	try{
     	for(int i = 0; i < AreaArray.length; i++)
    		{
     		double area1 = AreaArray[i];
-   			for(int j = 0; i < AreaArray.length; j++)
+   			for(int j = 0; j < AreaArray.length; j++)
    			{
    				double area2 = AreaArray[j];
    				if(area1 * 2 >= area2 * (1 - AreaThresholdPercentage / 100) 
@@ -58,6 +61,8 @@ public class TurnToBoiler extends Command {
     			{
    					if(CenterX[i] - CenterXThreshold <= CenterX[j] && CenterX[j] <= CenterX[i] + CenterXThreshold)
    					{
+   						topIndex = j;
+   						botIndex = i;
    						passed = true;
    						break;
    					}
@@ -65,24 +70,41 @@ public class TurnToBoiler extends Command {
     		}
     		if(passed) break;
    		}
-    	
-    	if(CenterX[0] >= cameraCenter + CenterXThreshold && passed)
+    	} catch(Exception e) {SmartDashboard.putBoolean("Errored", true);}
+    	double error;
+    	try{
+    	error = Math.abs(CenterX[0] - cameraCenter);
+    	double speed = error * kP;
+    	if(CenterX[0] >= cameraCenter + CenterXThreshold && passed) // Need to turn right 
     	{
-    		Robot.drivetrain.drive(-.6, .6);
+    		Robot.drivetrain.drive(speed, -speed);
     	}
-    	else if(CenterX[0] <= cameraCenter - CenterXThreshold && passed)
+    	else if(CenterX[0] <= cameraCenter - CenterXThreshold && passed) // Need to turn left
     	{
-    		Robot.drivetrain.drive(.6 , -.6);
+    		Robot.drivetrain.drive(-speed, speed);
     	}
-    	
+    	} catch(Exception e) {SmartDashboard.putBoolean("Errored", true);}
     	DriverStation.reportWarning(passed + "", true);
-    	if(!passed) Robot.drivetrain.drive(-.6, .6);
-    	else Robot.drivetrain.stop();
+    	if(!passed) 
+    	{
+    		Robot.drivetrain.drive(-.45, .45);
+    		DriverStation.reportWarning("404", true);
+    	}
+    	 
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return passed;
+        if(CenterX.length > 1)
+        {
+        	if(cameraCenter + CenterThreshold >= CenterX[topIndex]
+        		&& cameraCenter - CenterThreshold <= CenterX[topIndex])
+        	{
+        		DriverStation.reportWarning("Finished", true);
+        		return true;
+        	}
+        }
+        return false;
     }
 
     // Called once after isFinished returns true

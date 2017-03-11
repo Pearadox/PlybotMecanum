@@ -9,7 +9,7 @@ public class GearCollectCommand extends CommandGroup {
 
     public GearCollectCommand() {
     	addSequential(new CollectGear());
-    	addSequential(new RaiseArm());
+//    	addSequential(new RaiseArm());
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

@@ -20,18 +20,7 @@ public class Electrical extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
 //    	setDefaultCommand(new getCurrents_Command());
     }
-    public void putCurrent(){
-//    	double triggerCurrent = pdp.getCurrent(1);
-//    	double intakeCurrent = pdp.getCurrent(0);
-//    	double collectorCurrent = pdp.getCurrent(2);
-//    	double wheelCurrent = pdp.getCurrent(3);
-//    	
-//    	SmartDashboard.putNumber("Trigger Current", triggerCurrent);
-//    	SmartDashboard.putNumber("Intake Current", intakeCurrent);
-//    	SmartDashboard.putNumber("Collector Current", collectorCurrent);
-//    	SmartDashboard.putNumber("Wheel Current", wheelCurrent);
-//    	
-    	}
+  
     
     public double getClimberCurrent() {
     	return pdp.getCurrent(RobotMap.PDPclimber);			//gets the voltage of the climber to determine when we need to stop it

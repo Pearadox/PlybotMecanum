@@ -5,6 +5,9 @@ import org.usfirst.frc.team5414.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ *
+ */
 public class Lifting extends Command {
 
     public Lifting() {

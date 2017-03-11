@@ -23,8 +23,8 @@ import edu.wpi.cscore.UsbCamera;
 import org.usfirst.frc.team5414.robot.commands.AutonomousLeftSide;
 import org.usfirst.frc.team5414.robot.commands.AutonomousMiddle;
 import org.usfirst.frc.team5414.robot.commands.AutonomousRightSide;
-//import org.usfirst.frc.team5414.robot.commands.EncoderDrives;
-import org.usfirst.frc.team5414.robot.commands.RaiseArm;
+import org.usfirst.frc.team5414.robot.commands.EncoderDrives;
+import org.usfirst.frc.team5414.robot.commands.LowerArm;
 import org.usfirst.frc.team5414.robot.commands.SetCompPractWheel;
 import org.usfirst.frc.team5414.robot.commands.SetPlybotWheel;
 import org.usfirst.frc.team5414.robot.subsystems.Climber;
@@ -53,7 +53,7 @@ public class Robot extends IterativeRobot {
 	public static GearCollector gearcollector;
 	public static REVDigitBoard revdigitboard;
 	public static Servo1 servo1;
-	Preferences prefs;
+	public static Preferences prefs;
 //	public static DigitalInput 
 	public static Shooter shooter;
 	Command autonomousCommand;
@@ -152,7 +152,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		navx.zeroYaw();
 		navx.reset();
-//		autonomousCommand = (Command) new EncoderDrives(3.2);
+		autonomousCommand = (Command) new EncoderDrives(3.2);
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}

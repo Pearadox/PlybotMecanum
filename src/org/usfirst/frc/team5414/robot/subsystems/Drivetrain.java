@@ -44,10 +44,10 @@ public class Drivetrain extends Subsystem {
     	encoderBL.reset();
     	encoderFL.reset();
     	
-    	FL = new DoubleSolenoid(3,4);
-    	FR = new DoubleSolenoid(2,5);
-    	BL = new DoubleSolenoid(1,6);
-    	BR = new DoubleSolenoid(0,7);
+    	FL = new DoubleSolenoid(RobotMap.SolenoidFLa , RobotMap.SolenoidFLb );
+    	FR = new DoubleSolenoid(RobotMap.SolenoidFRa,RobotMap.SolenoidFRb);
+    	BL = new DoubleSolenoid(RobotMap.SolenoidBLa,RobotMap.SolenoidBLb);
+    	BR = new DoubleSolenoid(RobotMap.SolenoidBRa,RobotMap.SolenoidBRb);
 
     	FL.set(DoubleSolenoid.Value.kForward);
     	FR.set(DoubleSolenoid.Value.kForward);

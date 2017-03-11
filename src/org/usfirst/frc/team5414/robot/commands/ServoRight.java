@@ -26,7 +26,7 @@ int x =0;
     protected void execute() {
     	SmartDashboard.putNumber("Servo2Angle", Robot.servo1.servo2.getAngle());
     	if(Robot.servo1.servo.getAngle()  <= 100){
-    		Robot.servo1.setAngleRight(90-(x/2));
+//    		Robot.servo1.setAngleRight(90-(x/2));
     		x++;
     	}
     	
