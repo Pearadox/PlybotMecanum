@@ -33,9 +33,9 @@ public class DriveEncDist extends Command implements PIDOutput{
     // Called just before this Command runs the first time
     protected void initialize() {
     	prefs = Preferences.getInstance();
-    	prefs.putDouble("kP", kP);
-    	prefs.putDouble("kI", kI);
-    	prefs.putDouble("kD", kD);
+    	prefs.getDouble("kP", kP);
+    	prefs.getDouble("kI", kI);
+    	prefs.getDouble("kD", kD);
     	Robot.gyro.zeroYaw();
     	Robot.encoder.reset();
     	originalAngle = Robot.gyro.getYaw();

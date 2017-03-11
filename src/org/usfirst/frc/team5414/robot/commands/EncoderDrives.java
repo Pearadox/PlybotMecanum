@@ -59,7 +59,12 @@ public class EncoderDrives extends Command {
     	SmartDashboard.putNumber("errorR", errorR);
     	SmartDashboard.putNumber("speedL", speedL);
     	SmartDashboard.putNumber("speedR", speedR);
-    	Robot.drivetrain.drive(-speedL,speedR);
+    	if(distance>0){
+    		Robot.drivetrain.drive(-speedL,speedR);
+    	}else{
+    		Robot.drivetrain.drive(speedL,-speedR);
+    	}
+    
     }
 
     // Make this return true when this Command no longer needs to run execute()

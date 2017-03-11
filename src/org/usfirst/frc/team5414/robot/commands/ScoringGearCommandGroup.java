@@ -9,7 +9,8 @@ public class ScoringGearCommandGroup extends CommandGroup {
 
     public ScoringGearCommandGroup() {
     	addParallel(new SpitGear());
-    	addSequential(new LowerArm());
+    	addParallel(new LowerArm());
+    	addSequential(new EncoderDrives(-1));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
