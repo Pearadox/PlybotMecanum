@@ -32,7 +32,7 @@ import org.usfirst.frc.team5414.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team5414.robot.subsystems.Electrical;
 import org.usfirst.frc.team5414.robot.subsystems.GearArm;
 import org.usfirst.frc.team5414.robot.subsystems.GearCollector;
-import org.usfirst.frc.team5414.robot.subsystems.NavX;
+import org.usfirst.frc.team5414.robot.subsystems.Gyro;
 import org.usfirst.frc.team5414.robot.subsystems.Servo1;
 import org.usfirst.frc.team5414.robot.subsystems.Shooter;
 import org.usfirst.frc.team5414.robot.subsystems.WheelEncoder;
@@ -46,7 +46,7 @@ public class Robot extends IterativeRobot {
 	public static NetworkTable table; 
 	public static WheelEncoder encoder;
 	public static OI oi;
-	public static NavX navx;
+	public static Gyro gyro;
 	public static Climber climber;
 	public static Electrical electrical;
 	public static GearArm geararm;
@@ -85,7 +85,7 @@ public class Robot extends IterativeRobot {
 		climber = new Climber();
 		electrical = new Electrical();
 //		Robot.drivetrain.FullTraction();
-		navx = new NavX();
+		gyro = new Gyro();
 //		shoot=new Wheel();
 		oi = new OI();
 		chooser.addDefault("Plybot (8 in)", new SetPlybotWheel());
@@ -150,8 +150,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		navx.zeroYaw();
-		navx.reset();
+		gyro.reset();
 		autonomousCommand = (Command) new EncoderDrives(3.2);
 		if (autonomousCommand != null)
 			autonomousCommand.start();

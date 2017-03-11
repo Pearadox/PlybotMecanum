@@ -3,6 +3,7 @@ package org.usfirst.frc.team5414.robot.commands;
 import org.usfirst.frc.team5414.robot.Robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -25,6 +26,7 @@ public class TurnToBoiler extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	setTimeout(6);
     	passed = false;
     }
 
@@ -104,6 +106,7 @@ public class TurnToBoiler extends Command {
         		return true;
         	}
         }
+        else if(isTimedOut()) return true;
         return false;
     }
 

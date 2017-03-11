@@ -248,9 +248,9 @@ public void mecanumDrive(Joystick stick) {
 		
 		// preserve heading when recently stopped commanding rotations
 				if (countIterations == 5) {
-					desiredHeading = Robot.navx.getYaw();
+					desiredHeading = Robot.gyro.getYaw();
 				} else if (countIterations > 5) {
-					Rotate = (desiredHeading - Robot.navx.getYaw()) / 40.0;
+					Rotate = (desiredHeading - Robot.gyro.getYaw()) / 40.0;
 				}
 				SmartDashboard.putNumber("EncoderBR", encoderBR.get());
 		    	SmartDashboard.putNumber("EncoderFR", encoderFR.get());

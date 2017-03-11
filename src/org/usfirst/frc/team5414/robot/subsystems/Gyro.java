@@ -14,33 +14,33 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class NavX extends Subsystem implements PIDSource{
+public class Gyro extends Subsystem implements PIDSource{
 
 //	AHRS ahrs;
-	AnalogGyro ahrs;
+	AnalogGyro gy;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
 //    	ahrs = new AHRS(SPI.Port.kMXP);
-    	ahrs = new AnalogGyro(RobotMap.GyroPort);		//declaring gyro
-    	ahrs.initGyro();				//intitializing the gyro
+    	gy = new AnalogGyro(RobotMap.GyroPort);		//declaring gyro
+    	gy.initGyro();				//intitializing the gyro
+    	gy.setSensitivity(.007);
     }
     
     public double getYaw()
     {
-    	return ahrs.getAngle();			//getting the angle of the gyro
+    	return gy.getAngle();			//getting the angle of the gyro
     }
     
     public void zeroYaw()
     {
-//    	ahrs.zeroYaw();
-    	ahrs.reset();					//resetting the gyro
+    	reset();	
     }
     
     public void reset()
     {
-    	ahrs.reset();					//resetting the gyro
+    	gy.reset();					//resetting the gyro
     }
 
 	public void setPIDSourceType(PIDSourceType pidSource) {
