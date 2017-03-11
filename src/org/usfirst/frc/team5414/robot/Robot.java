@@ -24,7 +24,7 @@ import org.usfirst.frc.team5414.robot.commands.AutoLeftGear;
 import org.usfirst.frc.team5414.robot.commands.AutoRightGear;
 import org.usfirst.frc.team5414.robot.commands.AutoMidGear;
 import org.usfirst.frc.team5414.robot.commands.EncoderDrives;
-import org.usfirst.frc.team5414.robot.commands.LowerArm;
+import org.usfirst.frc.team5414.robot.commands.RaiseArm;
 import org.usfirst.frc.team5414.robot.subsystems.Climber;
 import org.usfirst.frc.team5414.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team5414.robot.subsystems.Electrical;
@@ -67,8 +67,9 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		try{
 			servo1 = new Servo1();
-//			cam1 = new UsbCamera("cam1", 1); 
-//			CameraServer.getInstance().startAutomaticCapture(0);
+			cam1 = new UsbCamera("cam0", 0);
+			cam1.setResolution(320	, 270);
+			CameraServer.getInstance().startAutomaticCapture(cam1);
 //			CameraServer.getInstance().startAutomaticCapture(1);
 		} catch(Exception e){}
 		revdigitboard = new REVDigitBoard();
@@ -173,7 +174,7 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void teleopPeriodic() {
-		
+
 //		if(maxX == 9001) maxX = OI.stick.getRawAxis(0);
 //		if(maxY == 9001) maxY = OI.stick.getRawAxis(1);
 //		if(maxT == 9001) maxT = OI.stick.getRawAxis(2);
@@ -187,7 +188,6 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("max Y", maxY);
 //		SmartDashboard.putNumber("max Twist", maxT);
 //		SmartDashboard.putNumber("servangle", ServoTest.serv.getAngle());
-		System.out.println(geararm.currentposition());
 		double[] areas = table.getNumberArray("area", new double[0]);
 		SmartDashboard.putString("Area", Arrays.toString(areas));
 		Scheduler.getInstance().run();
@@ -202,7 +202,7 @@ public class Robot extends IterativeRobot {
 				SmartDashboard.putBoolean("Errored", true);
 			}
     		
-
+    		SmartDashboard.putNumber("Gyro Angle", gyro.getYaw());
 	}
 
 	/**

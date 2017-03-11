@@ -4,6 +4,7 @@ import org.usfirst.frc.team5414.robot.Robot;
 import org.usfirst.frc.team5414.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Preferences;
@@ -25,21 +26,22 @@ public class DriveEncDist extends Command implements PIDOutput{
 	double PIDOut;
 	
     public DriveEncDist(double d) {
-    	distance = d* RobotMap.EncoderTicks;
+    	distance = d / RobotMap.LengthPerTick;
     	requires(Robot.drivetrain);
     	requires(Robot.gyro);
     	}
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.drivetrain.FullButterfly();
     	prefs = Preferences.getInstance();
     	prefs.getDouble("kP", kP);
     	prefs.getDouble("kI", kI);
     	prefs.getDouble("kD", kD);
     	Robot.gyro.zeroYaw();
-    	Robot.encoder.reset();
+    	
     	originalAngle = Robot.gyro.getYaw();
-//    	initDistance = Robot.encoder.getDistance();
+    	initDistance = Robot.drivetrain.getEncoderBL();
     	twistpid = new PIDController(kP, kI, kD, Robot.gyro, this, .01);
     	twistpid.setInputRange(-360, 360);
     	twistpid.setOutputRange(-1.0, 1.0);
@@ -47,19 +49,17 @@ public class DriveEncDist extends Command implements PIDOutput{
     	twistpid.setAbsoluteTolerance(kToleranceDegrees);
     	twistpid.setSetpoint(originalAngle);
     	twistpid.enable();
-    	
     }
     
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-//    	double changeInAngle = Robot.navx.getYaw()-originalAngle;
-//    	if(Robot.encoder.getDistance() < (distance + initDistance))
-//    	{
-//    		Robot.drivetrain.arcadeDrive(-.5, -1*changeInAngle*kP);
-//    	}
-    	Robot.drivetrain.drive(.715,-.7);
+    	double changeInAngle = Robot.gyro.getYaw()-originalAngle;
+    	if(Robot.drivetrain.getEncoderBL() < (distance + initDistance))
+    	{
+    		Robot.drivetrain.arcadeDrive(-1*changeInAngle*kP,.7);
+    	}
 //    	kP = prefs.getDouble("Drive kP", kP);
 //    	kI = prefs.getDouble("Drive kI", kI);
 //    	kD = prefs.getDouble("Drive kD", kD);
@@ -68,18 +68,16 @@ public class DriveEncDist extends Command implements PIDOutput{
 //    	SmartDashboard.putNumber("(prefs) Drive kI", kI);
 //    	SmartDashboard.putNumber("(prefs) Drive kD", kD);
 //    	SmartDashboard.putNumber("(prefs)", speed);
-//    	SmartDashboard.putNumber("Difference In Angle", Robot.navx.getYaw() - originalAngle);
+    	SmartDashboard.putNumber("Difference In Angle", Robot.gyro.getYaw() - originalAngle);
 //    	System.out.println("DRIVE");
 //    	twistpid.setPID(kP, kI, kD);
 //    	twistpid.setSetpoint(originalAngle);
 //    	twistpid.enable();
-    	SmartDashboard.putNumber("encdist", Robot.drivetrain.getDistanceL());
-    	SmartDashboard.putNumber("targetdist", distance);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(Math.abs(Robot.encoder.getDistanceL()) >= distance/2){
+    	if(Robot.drivetrain.getEncoderBL() >= initDistance + distance){
     		return true;
     	}
     	return false;
@@ -88,7 +86,7 @@ public class DriveEncDist extends Command implements PIDOutput{
     // Called once after isFinished returns true
     protected void end() {
     	twistpid.disable();
-    	Robot.drivetrain.drive(0, 0);
+    	Robot.drivetrain.stop();
     }
 
     // Called when another command which requires one or more of the same

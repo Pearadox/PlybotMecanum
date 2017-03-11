@@ -45,14 +45,14 @@ public class EncoderDrives extends Command {
     	if(speedL >.7){
     		speedL = .7;
     	}
-    	if(speedL <.4){
-    		speedL = .4;
+    	if(speedL <.5){
+    		speedL = .5;
     	}
     	if(speedR >.7){
     		speedR = .7;
     	}
-    	if(speedR <.4){
-    		speedR = .4;
+    	if(speedR <.5){
+    		speedR = .5;
     	}
     	SmartDashboard.putNumber("difference", ultError);
     	SmartDashboard.putNumber("errorL", errorL);

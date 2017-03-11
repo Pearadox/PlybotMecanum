@@ -28,14 +28,15 @@ public class RobotMap {
 	public static int BtnCollectGearSpit = 12; 	
 	//***clean****
 	
-	public static double wheelDiameter = 6;
+	public static double wheelDiameter = 4.5 / 12;
 	public static final double compBotEnc = 128;
 	public static final int practiceBotEnc = 1440;
 	public static int LightSolenoid = 0;
-	public static double EncoderTicks = compBotEnc / 4 * 26 / 42 * 118 / 100;					//make sure to swap these values later
+//	public static double EncoderTicks = compBotEnc / 4 * 26 / 42 * 118 / 100;					//make sure to swap these values later
+	public static int EncoderTicks = 128;
 	public static double EncoderTicksMechanum = compBotEnc / 4 * 26 / 16 * 118 / 100;
-	public static double lengthOfRotation = (wheelDiameter / 2) * (2 * Math.PI);
-	public static double lengthOfTick = lengthOfRotation / EncoderTicks;
+	public static double Circumference = (wheelDiameter * Math.PI);
+	public static double LengthPerTick = Circumference / EncoderTicks;
 	
 	//shooter PID loop
 	public static int shooterTalon = 1;
@@ -71,7 +72,7 @@ public class RobotMap {
 	
 	
 	//arm & collector speeds
-	public static double ArmPositionDown = .25;
+	public static double ArmPositionDown = .28;
 	public static double ArmPositionUp = 0.0;
 	public static double armTargetRotations = .3;
 	public static double armRaiseSpeed= 0.3;
@@ -84,7 +85,7 @@ public class RobotMap {
 	
 	public static int PDPclimber = 2;
 	public static int climberCurrentSpike = 64;
-	public static double lifterholdspeed = -0.3;
+	public static double lifterholdspeed = -0.4;
 	public static double lifterLiftSpeed = -1.0;
 	public static double lifterLimitSwitchSpeed = 1;
 	

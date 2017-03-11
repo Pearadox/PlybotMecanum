@@ -11,15 +11,16 @@ import org.usfirst.frc.team5414.robot.commands.ClimberLimitSwitch;
 //import org.usfirst.frc.team5414.robot.commands.Activatehalf;
 import org.usfirst.frc.team5414.robot.commands.ClimberStop;
 import org.usfirst.frc.team5414.robot.commands.CollectGear;
+import org.usfirst.frc.team5414.robot.commands.DriveEncDist;
 //import org.usfirst.frc.team5414.robot.commands.DriveEncDist;
 import org.usfirst.frc.team5414.robot.commands.EncoderDrives;
 import org.usfirst.frc.team5414.robot.commands.GearCollectCommand;
 //import org.usfirst.frc.team5414.robot.commands.Align;
 import org.usfirst.frc.team5414.robot.commands.GoToPeg;
 import org.usfirst.frc.team5414.robot.commands.LiftingGroup;
-import org.usfirst.frc.team5414.robot.commands.RaiseArm;
-import org.usfirst.frc.team5414.robot.commands.ScoringGearCommandGroup;
 import org.usfirst.frc.team5414.robot.commands.LowerArm;
+import org.usfirst.frc.team5414.robot.commands.ScoringGearCommandGroup;
+import org.usfirst.frc.team5414.robot.commands.RaiseArm;
 import org.usfirst.frc.team5414.robot.commands.ServoClose;
 import org.usfirst.frc.team5414.robot.commands.ServoCloseCommandGroup;
 import org.usfirst.frc.team5414.robot.commands.ServoCommand;
@@ -93,11 +94,10 @@ public class OI {
 		
 		//GearCollector intake & raise & lowering commands
 		CollectGear.whenPressed(new GearCollectCommand()); 		//strats intake, stops when button released, then raises arm into limit switch
-		CollectGearSpitOut.whenPressed(new SpitGear());			//spits out gear
+//		CollectGearSpitOut.whenPressed(new SpitGear());			//spits out gear
+		CollectGearSpitOut.whenPressed(new DriveEncDist(15));
 		LowerArm.whenPressed(new ScoringGearCommandGroup());
 		RaiseArm.whenPressed(new RaiseArm());
-		
-		
 	}
 	public Joystick getJoystick1()
 	{

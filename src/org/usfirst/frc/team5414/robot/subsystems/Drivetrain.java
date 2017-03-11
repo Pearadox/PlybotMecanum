@@ -62,7 +62,22 @@ public class Drivetrain extends Subsystem {
 		rightb_motor.setInverted(Boolean.TRUE);
 		drive = new RobotDrive(leftf_motor, leftb_motor, rightf_motor, rightb_motor);
 		
-		LightSol = new Solenoid(RobotMap.LightSolenoid);
+//		LightSol = new Solenoid(RobotMap.LightSolenoid);
+    }
+    
+    public int getEncoderBL()
+    {
+    	return -encoderBL.get();
+    }
+    
+    public int getEncoderBR()
+    {
+    	return encoderBR.get();
+    }
+    
+    public void zeroEncoderBL()
+    {
+    	encoderBL.reset();
     }
 
     public void initDefaultCommand() {
@@ -149,9 +164,9 @@ public class Drivetrain extends Subsystem {
     	
     }
     
-//    public void arcadeDrive(double throttle, double twist){
-//    	drive.arcadeDrive(throttle,twist);
-//    }
+    public void arcadeDrive(double throttle, double twist){
+    	drive.arcadeDrive(throttle,twist);
+    }
     
     public double getDistanceL()
 	{
@@ -173,9 +188,29 @@ public class Drivetrain extends Subsystem {
     
     public void mecanumDrive(Joystick stick) {
     	SmartDashboard.putString("Drivemode", "Mecanum");  //publishing the drive mode to smartdashboard
+    	double moveY; 	//X-axis of motion for robot
+    	double Rotate;		//Rotation of motion for robot
+    	
+    	if(Math.abs(stick.getRawAxis(2)) < .37)	//Setting deadzone for the x-axis
+    	{
+    		Rotate = 0;
+    	}
+    	else
+    	{
+    		Rotate = stick.getRawAxis(2);
+    	}
+    	if(Math.abs(stick.getRawAxis(1)) < .18)		//Setting deazone for the y-axis
+    	{
+    		moveY = 0;
+    	}
+    	else
+    	{
+    		moveY = stick.getRawAxis(1);
+    	}
+    	
 		double moveX = stick.getRawAxis(0);					//setting joystick values to the axis'
-    	double moveY = -stick.getRawAxis(1);
-    	double Rotate = -stick.getRawAxis(2);
+    	moveY = -moveY;
+    	Rotate = -Rotate;
     	
     	int StrafeRight = 90;							//Sets POV values to variables 
     	int StrafeLeft = 270;

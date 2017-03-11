@@ -30,6 +30,7 @@ public class ClimberStop extends Command {
 
     
     protected void end() {
+    	Robot.climber.holdLifter();
     }
 
    

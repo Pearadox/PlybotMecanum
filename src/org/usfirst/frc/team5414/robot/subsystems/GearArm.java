@@ -19,6 +19,18 @@ public class GearArm extends Subsystem {
 	public GearArm() {
 		super();
 		GearArm = new CANTalon(RobotMap.DIOGearArm);
+		GearArm.setPosition(0);
+        GearArm.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
+        GearArm.reverseSensor(false);
+        GearArm.configNominalOutputVoltage(+0f, -0f);
+        GearArm.configPeakOutputVoltage(+12f, -12f);
+        GearArm.setAllowableClosedLoopErr(RobotMap.ArmError); 
+        GearArm.setProfile(0);
+        GearArm.setF(RobotMap.ArmkF);
+        GearArm.setP(RobotMap.ArmkP);
+        GearArm.setI(RobotMap.ArmkI); 
+        GearArm.setD(RobotMap.ArmkD);
+        GearArm.changeControlMode(TalonControlMode.Position);
 		//declaring the location of the arm electrically
 	}
     
@@ -29,21 +41,11 @@ public class GearArm extends Subsystem {
 
 	
     public void initDefaultCommand() {
-    	GearArm.setPosition(0);
-        GearArm.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
-        GearArm.reverseSensor(false);
-        GearArm.configNominalOutputVoltage(+0f, -0f);
-        GearArm.configPeakOutputVoltage(+12f, -12f);
-        GearArm.setAllowableClosedLoopErr(RobotMap.ArmError); 
-        GearArm.setProfile(0);
-        GearArm.setF(RobotMap.ArmkF);
-        GearArm.setP(RobotMap.ArmkP);
-        GearArm.setI(RobotMap.ArmkI); 
-        GearArm.setD(RobotMap.ArmkD); 
+    	
     }
     public void setPosition(double targetPositionRotations){
     	
-        GearArm.changeControlMode(TalonControlMode.Position);
+    	GearArm.changeControlMode(TalonControlMode.Position);
        	GearArm.set(targetPositionRotations); 
     }
     
