@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonomousMiddle extends CommandGroup {
+public class AutoMidGear extends CommandGroup {
 
-    public AutonomousMiddle() {
+    public AutoMidGear() {
     	
 //    	addSequential(new DriveEncDist(1));
     	

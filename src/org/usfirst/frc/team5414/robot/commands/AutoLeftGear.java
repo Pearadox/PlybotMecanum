@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonomousLeftSide extends CommandGroup {
+public class AutoLeftGear extends CommandGroup {
 
-    public AutonomousLeftSide() {
+    public AutoLeftGear() {
     
 //    	addSequential(new DriveEncDist(2));
     	

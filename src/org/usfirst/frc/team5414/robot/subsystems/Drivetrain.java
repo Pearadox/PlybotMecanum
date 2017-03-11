@@ -15,9 +15,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-/**
- *
- */
+
 public class Drivetrain extends Subsystem {
 
 	private SpeedController rightf_motor, rightb_motor, leftf_motor, leftb_motor;
@@ -29,7 +27,7 @@ public class Drivetrain extends Subsystem {
     private Encoder encoderFL; 
     PIDController motorController;
 
-	Solenoid sol;
+	Solenoid LightSol;
 	public static DoubleSolenoid FL,FR,BL,BR; 
     
     public Drivetrain()
@@ -63,7 +61,8 @@ public class Drivetrain extends Subsystem {
 		rightf_motor.setInverted(Boolean.TRUE);
 		rightb_motor.setInverted(Boolean.TRUE);
 		drive = new RobotDrive(leftf_motor, leftb_motor, rightf_motor, rightb_motor);
-    	
+		
+		LightSol = new Solenoid(RobotMap.LightSolenoid);
     }
 
     public void initDefaultCommand() {
@@ -111,17 +110,17 @@ public class Drivetrain extends Subsystem {
     
     public void toggleLight()
     {
-    	sol.set(!sol.get());
+    	LightSol.set(!LightSol.get());
     }
     
     public void enableLight()
     {
-    	sol.set(true);
+    	LightSol.set(true);
     }
     
     public void disableLight()
     {
-    	sol.set(false);
+    	LightSol.set(false);
     }
     public void FullTraction(){
 
@@ -172,9 +171,9 @@ public class Drivetrain extends Subsystem {
     		drive.tankDrive(0,0);
     }	
     
-public void mecanumDrive(Joystick stick) {
-	SmartDashboard.putString("Drivemode", "Mechanum");  //publishing the drive mode to smartdashboard
-		double moveX = stick.getRawAxis(0);				//setting joystick values to the axis'
+    public void mecanumDrive(Joystick stick) {
+    	SmartDashboard.putString("Drivemode", "Mecanum");  //publishing the drive mode to smartdashboard
+		double moveX = stick.getRawAxis(0);					//setting joystick values to the axis'
     	double moveY = -stick.getRawAxis(1);
     	double Rotate = -stick.getRawAxis(2);
     	
@@ -257,10 +256,5 @@ public void mecanumDrive(Joystick stick) {
 		    	SmartDashboard.putNumber("EncoderFL", encoderFL.get());
 		    	SmartDashboard.putNumber("EncoderBL", encoderBL.get());
 				drive.mecanumDrive_Cartesian(moveX, moveY, Rotate,0);
-				
-
-		
-	}	
-    	
+	}	   	
 }
-

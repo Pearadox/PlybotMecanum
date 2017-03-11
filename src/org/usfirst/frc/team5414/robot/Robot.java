@@ -20,9 +20,9 @@ import org.opencv.imgproc.Imgproc;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
-import org.usfirst.frc.team5414.robot.commands.AutonomousLeftSide;
-import org.usfirst.frc.team5414.robot.commands.AutonomousMiddle;
-import org.usfirst.frc.team5414.robot.commands.AutonomousRightSide;
+import org.usfirst.frc.team5414.robot.commands.AutoLeftGear;
+import org.usfirst.frc.team5414.robot.commands.AutoRightGear;
+import org.usfirst.frc.team5414.robot.commands.AutoMidGear;
 import org.usfirst.frc.team5414.robot.commands.EncoderDrives;
 import org.usfirst.frc.team5414.robot.commands.LowerArm;
 import org.usfirst.frc.team5414.robot.subsystems.Climber;
@@ -55,7 +55,7 @@ public class Robot extends IterativeRobot {
 //	public static DigitalInput 
 	public static Shooter shooter;
 	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
+	SendableChooser<Command> AutoChooser = new SendableChooser<>();
 	boolean currentButtonState=false;
     String test="";
     UsbCamera cam1;
@@ -68,7 +68,7 @@ public class Robot extends IterativeRobot {
 		try{
 			servo1 = new Servo1();
 //			cam1 = new UsbCamera("cam1", 1); 
-			CameraServer.getInstance().startAutomaticCapture(0);
+//			CameraServer.getInstance().startAutomaticCapture(0);
 //			CameraServer.getInstance().startAutomaticCapture(1);
 		} catch(Exception e){}
 		revdigitboard = new REVDigitBoard();
@@ -86,10 +86,10 @@ public class Robot extends IterativeRobot {
 		gyro = new Gyro();
 //		shoot=new Wheel();
 		oi = new OI();
-		chooser.addDefault("Left Side", new AutonomousLeftSide());
-		chooser.addDefault("Middle", new AutonomousMiddle());
-		chooser.addDefault("Right Side", new AutonomousRightSide());
-		SmartDashboard.putData("Autonomous Mode", chooser);
+		AutoChooser.addDefault("Left Side", new AutoLeftGear());
+		AutoChooser.addDefault("Middle", new AutoRightGear());
+		AutoChooser.addDefault("Right Side", new AutoRightGear());
+		SmartDashboard.putData("Autonomous Mode", AutoChooser);
 		prefs = Preferences.getInstance();
 		prefs.putString("Areas", "172,272,372,472");
 		prefs.putString("RPMs", "4000,3500,3000,2500");
@@ -113,40 +113,29 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
-		double REVPot = revdigitboard.getPot(); //LEFT = .27 RIGHT = .25
-		if(revdigitboard.getButtonA())
-		{
-			if(REVPot >= .26)
-			{
-				autonomousCommand = new AutonomousLeftSide();
-				DriverStation.reportWarning("Autonomous mode set to: LEFT", true);
-			}
-			else
-			{
-				autonomousCommand = new AutonomousRightSide();
-				DriverStation.reportWarning("Autonomous mode set to: RIGHT", true);
-			}
-		}
-		if(revdigitboard.getButtonB())	
-		{
-			autonomousCommand = new AutonomousMiddle();
-			DriverStation.reportWarning("Autonomous mode set to: MIDDLE", true);
-		}
+//		double REVPot = revdigitboard.getPot(); //LEFT = .27 RIGHT = .25
+//		if(revdigitboard.getButtonA())
+//		{
+//			if(REVPot >= .26)
+//			{
+//				autonomousCommand = new AutonomousLeftSide();
+//				DriverStation.reportWarning("Autonomous mode set to: LEFT", true);
+//			}
+//			else
+//			{
+//				autonomousCommand = new AutoRightGear();
+//				DriverStation.reportWarning("Autonomous mode set to: RIGHT", true);
+//			}
+//		}
+//		if(revdigitboard.getButtonB())	
+//		{
+//			autonomousCommand = new AutonomousMiddle();
+//			DriverStation.reportWarning("Autonomous mode set to: MIDDLE", true);
+//		}
 		
 		Scheduler.getInstance().run();
 	}
 
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
-	 */
 	@Override
 	public void autonomousInit() {
 		gyro.reset();
