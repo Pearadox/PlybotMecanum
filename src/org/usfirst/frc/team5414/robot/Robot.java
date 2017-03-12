@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
-
-//import edu.wpi.first.wpilibj.
 import java.util.*;
 import org.opencv.core.Mat;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -20,9 +18,9 @@ import org.opencv.imgproc.Imgproc;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
-import org.usfirst.frc.team5414.robot.commands.AutoLeftGear;
-import org.usfirst.frc.team5414.robot.commands.AutoRightGear;
-import org.usfirst.frc.team5414.robot.commands.AutoMidGear;
+import org.usfirst.frc.team5414.robot.commands.AutoLeftGearVision;
+import org.usfirst.frc.team5414.robot.commands.AutoRightGearVision;
+import org.usfirst.frc.team5414.robot.commands.AutoMidGearVision;
 import org.usfirst.frc.team5414.robot.commands.EncoderDrives;
 import org.usfirst.frc.team5414.robot.commands.RaiseArm;
 import org.usfirst.frc.team5414.robot.subsystems.Climber;
@@ -67,9 +65,9 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		try{
 			servo1 = new Servo1();
-			cam1 = new UsbCamera("cam0", 0);
-			cam1.setResolution(320	, 270);
-			CameraServer.getInstance().startAutomaticCapture(cam1);
+//			cam1 = new UsbCamera("cam0", 0);
+//			cam1.setResolution(320	, 270);
+//			CameraServer.getInstance().startAutomaticCapture(cam1);
 //			CameraServer.getInstance().startAutomaticCapture(1);
 		} catch(Exception e){}
 		revdigitboard = new REVDigitBoard();
@@ -87,13 +85,16 @@ public class Robot extends IterativeRobot {
 		gyro = new Gyro();
 //		shoot=new Wheel();
 		oi = new OI();
-		AutoChooser.addDefault("Left Side", new AutoLeftGear());
-		AutoChooser.addDefault("Middle", new AutoRightGear());
-		AutoChooser.addDefault("Right Side", new AutoRightGear());
+		AutoChooser.addDefault("Left Side", new AutoLeftGearVision());
+		AutoChooser.addDefault("Middle", new AutoRightGearVision());
+		AutoChooser.addDefault("Right Side", new AutoMidGearVision());
 		SmartDashboard.putData("Autonomous Mode", AutoChooser);
 		prefs = Preferences.getInstance();
 		prefs.putString("Areas", "172,272,372,472");
 		prefs.putString("RPMs", "4000,3500,3000,2500");
+		prefs.putDouble("GyrokP", RobotMap.GyrokP);
+		prefs.putDouble("GyrokI", RobotMap.GyrokI);
+		prefs.putDouble("GyrokD", RobotMap.GyrokD);
 		getAreas();
 		getRPMs();
 //		chooser.addDefault("Default Auto", new ExampleCommand());

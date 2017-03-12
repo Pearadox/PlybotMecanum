@@ -3,6 +3,7 @@ package org.usfirst.frc.team5414.robot.commands;
 import java.util.Arrays;
 
 import org.usfirst.frc.team5414.robot.Robot;
+import org.usfirst.frc.team5414.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,11 +24,15 @@ public class PivotToCenter extends Command {
 	final double cameraWidthInPixels = 360;	
 	double speed = 0;
 	double kp;
-	final double cameraViewCenter = 180;
+//	final double cameraViewCenter = 180;
+	final double cameraViewCenter = 160;
 	double[] CenterArray;
 //	double[] AreaArray = Robot.table.getNumberArray("area", new double[0]);
 	double CenterPanels;
 	boolean CenteredDone = false;
+	boolean onlyOne;
+	double[] AreaArray;
+	
 	
     public PivotToCenter() {
     	requires(Robot.drivetrain);
@@ -35,87 +40,82 @@ public class PivotToCenter extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	DriverStation.reportWarning("PivotToCenter", true);
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 
-    	
     	//SELECT CENTERS
-//    	try{
-    		CenterArray = Robot.table.getNumberArray("centerX", new double[0]);
-//    		if(CenterArray.length > 2)	//Pick 2 largest, center onto those TODO
-//    		{
-//    			double temp2 = CenterArray[CenterArray.length-1];
-//    			double temp1 = CenterArray[CenterArray.length-2];
-//    			CenterArray[0] = temp1;
-//    			CenterArray[1] = temp2;
-//    		}
-    		if(CenterArray[0] < CenterArray[1])
-    		{
-    			LeftPanel = CenterArray[0];
-	    		RightPanel = CenterArray[1];
-    		}
-    		else
-    		{
-    			LeftPanel = CenterArray[1];
-	    		RightPanel = CenterArray[0];
-    		}
-//	    	DriverStation.reportWarning(Arrays.toString(CenterArray), true);
-//    	}catch(Exception e){
-//    		DriverStation.reportWarning("Error at PivotToCenter (Select Centers)", true);
-//    	}
-	    
     	
-    	//DESIGNATE SPEED BASED ON ERROR (PID)
-    	CenterPanels = ((LeftPanel + RightPanel)/2.);
-//    	try {
-//        	error = Math.abs(cameraViewCenter - CenterPanels);
-//        	kp = (maxspeed - minspeed)/129;
-//    		speed = error * kp +.3;
-//    		if(speed > maxspeed) {
-//    			speed = maxspeed;
-//    		}
-//    		else if(speed < minspeed) {
-//    			speed = minspeed;
-//    		}
-//    		kp = (maxspeed - minspeed)/129;
-//    		CenterPanels = (LeftPanel + RightPanel)/2;
-//    	}
-//    	catch(Exception e) 
-//    	{
-//    		DriverStation.reportWarning("Error at PivotToCenter (PID)", true);
-//    	}
-    	//add pid closed loop TODO
+    	CenterArray = Robot.table.getNumberArray("centerX", new double[0]);
     	
-    	
-    	
-    	//ROTATE TO THE CENTER OF THE TARGET
-    	try {
-    		if(CenterPanels <= cameraViewCenter) {
-    	   		Robot.drivetrain.drive(-.35, .35);
-   			}
-   			else if(CenterPanels > cameraViewCenter) { //Centering left
-   	   			Robot.drivetrain.drive(.35, -.35); 
-    		}
-    	} 
-    	catch (Exception e) {
-    		DriverStation.reportWarning("Error at PivotToCenter (Rotate To Center)", true);
+    	if(CenterArray.length < 2) 
+    	{	
+    		DriverStation.reportWarning("can't find 2", true);
+    		Robot.drivetrain.drive(-.67, .67);
+    		CenterPanels = 0;
     	}
-    }
-
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-    	if(CenterPanels < (cameraViewCenter + 15) && CenterPanels > (cameraViewCenter - 15)){
-    		Robot.drivetrain.drive(0, 0);
-    		return true;
-    	}
-        return false;
+		else
+		{
+	    	try{
+	    		LeftPanel = CenterArray[0];
+		    	RightPanel = CenterArray[1];
+	    		
+		    	}catch(Exception e){
+		    		DriverStation.reportWarning("Error at PivotToCenter (Select Centers)", true);
+		    	}
+			    
+		    	
+		    	//DESIGNATE SPEED BASED ON ERROR (PID)
+		    	CenterPanels = ((LeftPanel + RightPanel)/2.);
+		    	//ROTATE TO THE CENTER OF THE TARGET
+		    	try {
+		    		if(CenterPanels >= cameraViewCenter + 20) { //Centering Right
+		    			DriverStation.reportWarning("Centering Right", true);
+		    	   		Robot.drivetrain.drive(-.6, .6);
+		   			}
+		   			else if(CenterPanels < cameraViewCenter - 20) { //Centering left
+		   				DriverStation.reportWarning("Centering Left", true);
+		   	   			Robot.drivetrain.drive(.6, -.6); 
+		    		}
+		    	}
+	    	
+	    	catch (Exception e) {
+	    		DriverStation.reportWarning("Error at PivotToCenter (Rotate To Center)", true);
+	    	}
+	    	}
+	    }
+	
+	    // Make this return true when this Command no longer needs to run execute()
+	    protected boolean isFinished() {
+	    	if(CenterPanels < (cameraViewCenter + 20) && CenterPanels > (cameraViewCenter - 20)){
+	    		Robot.drivetrain.drive(-RobotMap.goToPegSpeed, -RobotMap.goToPegSpeed);
+//	    		DriverStation.reportWarning("PivToCenter Done", true);
+	    		AreaArray = Robot.table.getNumberArray("area", new double[0]);
+	    		if(AreaArray.length == 2){ 
+		    		if(AreaArray[0] > 3000 || AreaArray[1] > 3000){
+		    			Robot.drivetrain.stop();
+		    			return true;
+		    		}
+		    	}
+		    	else if(AreaArray.length >= 3) // If the spring splits one of the rectangles into two
+		    	{
+		    		if(AreaArray[0] > 3000 || AreaArray[1] > 3000 || AreaArray[3] > 3000)
+		    		{
+		    			Robot.drivetrain.stop();
+		    			return true;
+		    		}
+		    	}
+	    		return false;
+	    	}
+	        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drivetrain.drive(0, 0);
+    	Robot.drivetrain.stop();
     }
 
     // Called when another command which requires one or more of the same

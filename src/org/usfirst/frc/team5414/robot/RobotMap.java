@@ -72,8 +72,8 @@ public class RobotMap {
 	
 	
 	//arm & collector speeds
-	public static double ArmPositionDown = .28;
-	public static double ArmPositionUp = 0.0;
+	public static double ArmPositionDown = .3;
+	public static double ArmPositionUp = 0.06;
 	public static double armTargetRotations = .3;
 	public static double armRaiseSpeed= 0.3;
 	public static double armLowerSpeed = -0.2;
@@ -90,7 +90,7 @@ public class RobotMap {
 	public static double lifterLimitSwitchSpeed = 1;
 	
 	//Autonomous settings
-	public static double  goToPegSpeed= -.4;
+	public static double  goToPegSpeed= .7;
 	
 	//Servo Ports
 	public static int ServoPort = 8;  		//Set to correct Port for servos for climber
@@ -126,6 +126,10 @@ public class RobotMap {
 	public static int DIOencoderBLb = 3;
 	public static int DIOGearArm = 0;
 	public static int DIOClimberLimit = 1;
+	
+	public static double GyrokP = 0.00005;
+	public static double GyrokI = 0.00003;
+	public static double GyrokD = 0.02;
 	
 	//Shooter Lookup Table
 //	public static double[] area;

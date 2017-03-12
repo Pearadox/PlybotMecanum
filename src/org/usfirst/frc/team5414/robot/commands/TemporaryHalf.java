@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ActivateHalf extends Command {
+public class TemporaryHalf extends Command {
 
-    public ActivateHalf() {
+    public TemporaryHalf() {
     	requires(Robot.drivetrain);
     }
 
@@ -27,7 +27,10 @@ public class ActivateHalf extends Command {
 
     
     protected boolean isFinished() {
-    	return true;
+    	if(!Robot.oi.getJoystick1().getRawButton(RobotMap.half)){ 		//stops command when BtnHalf is no longer being pressed
+    		return true;
+    	}
+        return false;
     }
 
     

@@ -16,16 +16,18 @@ public class DriveEncDist extends Command implements PIDOutput{
 	double initDistance;
 	double distance;
 	double originalAngle;
-	double kP = 0.00005;
-	double kI = 0.00003;
-	double kD = 0.02;
+	double kP = RobotMap.GyrokP;
+	double kI = RobotMap.GyrokD;
+	double kD = RobotMap.GyrokI;
 	final double kToleranceDegrees = 0.0f;
 	double speed = 0.5;
 	Preferences prefs;
 	PIDController twistpid;
 	double PIDOut;
+	double targetFeet;
 	
     public DriveEncDist(double d) {
+    	targetFeet = d;
     	distance = d / RobotMap.LengthPerTick;
     	requires(Robot.drivetrain);
     	requires(Robot.gyro);
@@ -35,9 +37,9 @@ public class DriveEncDist extends Command implements PIDOutput{
     protected void initialize() {
     	Robot.drivetrain.FullButterfly();
     	prefs = Preferences.getInstance();
-    	prefs.getDouble("kP", kP);
-    	prefs.getDouble("kI", kI);
-    	prefs.getDouble("kD", kD);
+    	kP = prefs.getDouble("GyrokP", RobotMap.GyrokP);
+    	kI = prefs.getDouble("GyrokI", RobotMap.GyrokI);
+    	kD = prefs.getDouble("GyrokD", RobotMap.GyrokD);
     	Robot.gyro.zeroYaw();
     	
     	originalAngle = Robot.gyro.getYaw();
@@ -58,7 +60,7 @@ public class DriveEncDist extends Command implements PIDOutput{
     	double changeInAngle = Robot.gyro.getYaw()-originalAngle;
     	if(Robot.drivetrain.getEncoderBL() < (distance + initDistance))
     	{
-    		Robot.drivetrain.arcadeDrive(-1*changeInAngle*kP,.7);
+    		Robot.drivetrain.arcadeDrive(-1*changeInAngle*PIDOut,.6);
     	}
 //    	kP = prefs.getDouble("Drive kP", kP);
 //    	kI = prefs.getDouble("Drive kI", kI);
@@ -77,9 +79,14 @@ public class DriveEncDist extends Command implements PIDOutput{
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(Robot.drivetrain.getEncoderBL() >= initDistance + distance){
+    	if(Robot.drivetrain.getEncoderBL() >= initDistance + distance && targetFeet >= 0){
     		return true;
     	}
+    	else if(Robot.drivetrain.getEncoderBL()<= initDistance + distance && targetFeet < 0)
+    	{
+    		return true;
+    	}
+    	
     	return false;
     }
 

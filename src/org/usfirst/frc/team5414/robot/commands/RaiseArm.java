@@ -3,6 +3,7 @@ package org.usfirst.frc.team5414.robot.commands;
 import org.usfirst.frc.team5414.robot.Robot;
 import org.usfirst.frc.team5414.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -14,6 +15,7 @@ public class RaiseArm extends Command {
 	double upPos = 0.0;
 	boolean islimitpressed =false;
 	double CurrentPos = 0;
+	
     public RaiseArm() {
       
     	requires(Robot.geararm);
@@ -22,8 +24,8 @@ public class RaiseArm extends Command {
 
     protected void initialize() {
     	Robot.geararm.setPosition(RobotMap.ArmPositionUp);
-    	upPos = Robot.prefs.getDouble("UpPosition", RobotMap.ArmPositionDown);
-    	System.out.println("RaiseArm");
+//    	upPos = Robot.prefs.getDouble("UpPosition", RobotMap.ArmPositionDown);
+//    	System.out.println("RaiseArm");
 //    	islimitpressed = Robot.gearcollector.isLimitSet();  //makes a boolean that will be used to stop the function if the limit is pressed before command starts
     
     }
@@ -41,7 +43,7 @@ public class RaiseArm extends Command {
 
     protected boolean isFinished() {
 
-    	CurrentPos = Robot.geararm.GearArm.getPulseWidthPosition() & 0xFFF; 
+//    	CurrentPos = Robot.geararm.GearArm.getPulseWidthPosition() & 0xFFF; 
 //    	if(!Robot.gearcollector.isLimitSet()){		//if the limit switch has been pressed, this stops the command
 //    	if (CurrentPos < 5)	
     		return true;

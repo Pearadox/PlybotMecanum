@@ -152,15 +152,14 @@ public class Drivetrain extends Subsystem {
     	BL.set(DoubleSolenoid.Value.kForward);
     	BR.set(DoubleSolenoid.Value.kForward);
     }
-    public void HalfButterly(){
+    public void HalfButterfly(){
     	FL.set(DoubleSolenoid.Value.kForward);		//this code isnt used for mechanums, but for omnis, sets half of the solonoids to engage omni's
     	FR.set(DoubleSolenoid.Value.kForward);
     	BL.set(DoubleSolenoid.Value.kReverse);
     	BR.set(DoubleSolenoid.Value.kReverse);
     } 
     public void drive(double left, double right) {
-    	double drivestraightconstant = 1; 
-    	drive.tankDrive(left * drivestraightconstant, right);
+    	drive.tankDrive(left, -right);
     	
     }
     
@@ -208,7 +207,15 @@ public class Drivetrain extends Subsystem {
     		moveY = stick.getRawAxis(1);
     	}
     	
+    	boolean moveYNegative = false, RotateNegative = false;
+    	if(moveY < 0) moveYNegative = true;
+    	if(Rotate < 0) RotateNegative = true;
+    	moveY *= moveY; Rotate *= Rotate; //scaling the output of the joystick to fine tune the end result
+    	if(moveYNegative) moveY *= -1;
+    	if(RotateNegative) Rotate *= -1;
+    	
 		double moveX = stick.getRawAxis(0);					//setting joystick values to the axis'
+		
     	moveY = -moveY;
     	Rotate = -Rotate;
     	

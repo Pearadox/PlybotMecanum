@@ -20,7 +20,7 @@ public class PivotToTargets extends Command {
 	double minspeed = .4;
 	double maxspeed = .4;
 	double cameraWidthInPixels = 360;
-	double speed = 0;
+	double speed = .4;
 	double kp = (maxspeed - minspeed)/129;
 	double[] CenterArray;
 
@@ -41,7 +41,7 @@ public class PivotToTargets extends Command {
     		//check if 2 blobs 
 //    		error = Math.abs(cameraViewCenter - CenterPanels);
 //    		speed = error * kp +.3;
-    		speed = .35;
+    		speed = .62;
 //    		if(speed > maxspeed) {
 //    			speed = maxspeed;
 //    		}
@@ -76,8 +76,9 @@ public class PivotToTargets extends Command {
     protected boolean isFinished() {
     	if(CenterArray.length >= 2){
     		if(Math.abs(CenterArray[0] - CenterArray[1]) <= CenterArray[0] * .4)
-    			//if difference between 0 and 1 is less than 40% of 0
     			return true;
+    			//if difference between 0 and 1 is less than 40% of 0
+    			
     	}
 //    	DriverStation.reportError("No targets found", CenterArray.length == 0);
         return false;

@@ -4,7 +4,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
 
 import org.usfirst.frc.team5414.robot.commands.ActivateTraction;
-import org.usfirst.frc.team5414.robot.commands.Activatehalf;
+import org.usfirst.frc.team5414.robot.commands.AutoMidGearVision;
+import org.usfirst.frc.team5414.robot.commands.ActivateHalf;
 import org.usfirst.frc.team5414.robot.commands.ClimberLimitSwitch;
 //import org.usfirst.frc.team5414.robot.commands.ActivateButt;
 //import org.usfirst.frc.team5414.robot.commands.ActivateTract;
@@ -75,7 +76,7 @@ public class OI {
 		
 		//Butterfly Drive commands for solonoids
 		ActivateButterfly.whenPressed(new ActivateTraction());
-		half.whenPressed(new Activatehalf());
+		half.whenPressed(new ActivateHalf());
 
 //		Shoot.whenPressed(new Shoot());
 		
@@ -95,7 +96,9 @@ public class OI {
 		//GearCollector intake & raise & lowering commands
 		CollectGear.whenPressed(new GearCollectCommand()); 		//strats intake, stops when button released, then raises arm into limit switch
 //		CollectGearSpitOut.whenPressed(new SpitGear());			//spits out gear
-		CollectGearSpitOut.whenPressed(new DriveEncDist(15));
+//		CollectGearSpitOut.whenPressed(new DriveEncDist(15));
+//		CollectGearSpitOut.whenPressed(new GoToPeg());
+		CollectGearSpitOut.whenPressed(new AutoMidGearVision());
 		LowerArm.whenPressed(new ScoringGearCommandGroup());
 		RaiseArm.whenPressed(new RaiseArm());
 	}

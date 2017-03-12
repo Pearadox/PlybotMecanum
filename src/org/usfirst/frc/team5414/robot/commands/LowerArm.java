@@ -19,7 +19,7 @@ public class LowerArm extends Command {
     
     protected void initialize() {
     	Robot.geararm.setPosition(RobotMap.ArmPositionDown);
-    	System.out.println("LowerArm");
+//    	System.out.println("LowerArm");
     }
 
   
@@ -35,7 +35,7 @@ public class LowerArm extends Command {
 
  
     protected void end() {
-    	System.out.println("Current: " + Robot.geararm.currentposition() + "Target: " + RobotMap.ArmPositionDown);
+//    	System.out.println("Current: " + Robot.geararm.currentposition() + "Target: " + RobotMap.ArmPositionDown);
 //    	Robot.geararm.lower(); 		//sets the geararm motor to 0 after the command is done exexuting
     }
 

@@ -12,6 +12,6 @@ public class ScoringGearCommandGroup extends CommandGroup {
     	
     	addParallel(new LowerArm());
     	
-    	addSequential(new EncoderDrives(-1));
+//    	addSequential(new EncoderDrives(-1));
     }
 }
