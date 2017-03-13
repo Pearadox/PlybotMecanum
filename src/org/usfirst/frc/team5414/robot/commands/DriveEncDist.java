@@ -58,10 +58,14 @@ public class DriveEncDist extends Command implements PIDOutput{
     protected void execute() {
     	
     	double changeInAngle = Robot.gyro.getYaw()-originalAngle;
-    	if(Robot.drivetrain.getEncoderBL() < (distance + initDistance))
+    	if(Robot.drivetrain.getEncoderBL() < (distance + initDistance) && targetfeet >= 0)
     	{
-    		Robot.drivetrain.arcadeDrive(-1*changeInAngle*PIDOut,.6);
+    		Robot.drivetrain.arcadeDrive(-changeInAngle*PIDOut,.6);
     	}
+	else if(Robot.drivetrain.getEncoderBL() < (distance + initDistance))
+	{
+		Robot.drivetrain.arcadeDrive(-changeInAngle*PIDOut, -.6);
+	}
 //    	kP = prefs.getDouble("Drive kP", kP);
 //    	kI = prefs.getDouble("Drive kI", kI);
 //    	kD = prefs.getDouble("Drive kD", kD);
