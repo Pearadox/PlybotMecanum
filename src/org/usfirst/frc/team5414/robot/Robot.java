@@ -64,12 +64,15 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		try{
+			//Not sure what this is before - if this was just for testing, we should remove it.
+			//Need to have the servos in the climbing subsystem
 			servo1 = new Servo1();
 //			cam1 = new UsbCamera("cam0", 0);
 //			cam1.setResolution(320	, 270);
 //			CameraServer.getInstance().startAutomaticCapture(cam1);
 //			CameraServer.getInstance().startAutomaticCapture(1);
 		} catch(Exception e){}
+		//Should probably remove the digiboard as we are unlikely to use it. 
 		revdigitboard = new REVDigitBoard();
 		table = NetworkTable.getTable("GRIP/myContoursReport");
 		geararm = new GearArm();
@@ -86,8 +89,15 @@ public class Robot extends IterativeRobot {
 //		shoot=new Wheel();
 		oi = new OI();
 		AutoChooser.addDefault("Left Side", new AutoLeftGearVision());
+		
+		//These can't all be defaults. It should become AutoChooser.addObject();
+		/** Should add a command that just drives forward for a set amount of second 
+		  * so that we have a auto mode that gets us the 5 pt bonus for driving forward
+		  */
 		AutoChooser.addDefault("Middle", new AutoRightGearVision());
 		AutoChooser.addDefault("Right Side", new AutoMidGearVision());
+		
+		//Should also add an autonomous mode that does nothing. Just in Case
 		SmartDashboard.putData("Autonomous Mode", AutoChooser);
 		prefs = Preferences.getInstance();
 		prefs.putString("Areas", "172,272,372,472");
@@ -141,6 +151,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		gyro.reset();
+		
+		//This currently ignores anything chosen by the smartDashboard and would just drive forward. 
 		autonomousCommand = (Command) new EncoderDrives(3.2);
 		if (autonomousCommand != null)
 			autonomousCommand.start();
