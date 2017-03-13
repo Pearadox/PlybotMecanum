@@ -28,6 +28,7 @@ public class SpitGear extends Command {
 
     
     protected boolean isFinished() {
+        //this command probably wont work in autonomous because the button isn't pushed, causing it to immediately be finished. 
     	if(!Robot.oi.getJoystick1().getRawButton(RobotMap.BtnLower)){			//stops the command if the button BtnCollectGearSpit is no longer being pressed 
     		return true;
     	}
