@@ -28,6 +28,7 @@ public class RobotMap {
 	public static int BtnCollectGearSpit = 12; 	
 	//***clean****
 	
+	
 	public static double wheelDiameter = 4.5 / 12;
 	public static final double compBotEnc = 128;
 	public static final int practiceBotEnc = 1440;
@@ -36,7 +37,7 @@ public class RobotMap {
 	public static int EncoderTicks = 128;
 	public static double EncoderTicksMechanum = compBotEnc / 4 * 26 / 16 * 118 / 100;
 	public static double Circumference = (wheelDiameter * Math.PI);
-	public static double LengthPerTick = Circumference / EncoderTicks;
+	public static double LengthPerTick = Circumference / EncoderTicks; // this is only roughly true for traction wheels
 	
 	//shooter PID loop
 	public static int shooterTalon = 1;
