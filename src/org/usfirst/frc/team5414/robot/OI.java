@@ -98,7 +98,12 @@ public class OI {
 //		CollectGearSpitOut.whenPressed(new SpitGear());			//spits out gear
 //		CollectGearSpitOut.whenPressed(new DriveEncDist(15));
 //		CollectGearSpitOut.whenPressed(new GoToPeg());
-		CollectGearSpitOut.whenPressed(new AutoMidGearVision());
+		
+		//Lets not do things like this. We should either use the chooser, or create a new button
+		//for whatever we're testing. 
+		//CollectGearSpitOut.whenPressed(new AutoMidGearVision());
+		
+		CollectGearSpitOut.whenPressed(new SpitGear());
 		LowerArm.whenPressed(new ScoringGearCommandGroup());
 		RaiseArm.whenPressed(new RaiseArm());
 	}
